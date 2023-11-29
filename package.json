@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "name": "mongodb-medico-website",
+  "version": "1.0.0",
+  "description": "\"Semister Project\"",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gopalpatil0318/MongoDb-Medico-Website.git"
+  },
+  "author": "Gopal Patil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gopalpatil0318/MongoDb-Medico-Website/issues"
+  },
+  "homepage": "https://github.com/gopalpatil0318/MongoDb-Medico-Website#readme"
+}
