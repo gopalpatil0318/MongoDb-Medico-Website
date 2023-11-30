@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Management System</title>
+
+
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/addMedicine.css">
+    <link rel="stylesheet" href="./css/addPurchase.css">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;0,900;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Nav Bar -->
+    <div class="big-heading">Medical Management System</div>
+    <div class="navbar">
+        <a href="/">Dashboard</a>
+        <div class="dropdown">
+            <button class="dropbtn">Invoice
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="/newInvoice">Add New Invoice</a>
+                <a href="../invoice/manageInvoice.html">Manage Invoice</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Customer
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="/addCustomer">Add New Customer</a>
+                <a href="/manageCustomer">Manage Customer</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Medicine
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="/addMedicine">Add New Medicine</a>
+                <a href="/manageMedicine">Manage Medicine</a>
+                <a href="/manageMedicineStock">Manage Medicine Stock</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Supplier
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="/addSupplier">Add New Supplier</a>
+                <a href="/manageSupplier">Manage Supplier</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Purchase
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="/addPurchase">Add New Purchase</a>
+                <a href="/managePurchase">Manage Purchase</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Report
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="../report/purchaseReport.html">Purchase Report</a>
+                <a href="../report/salesReport.html">Sales Report</a>
+            </div>
+        </div>
+
+    </div>
+
+<div class="main-container">
+    <div class="container-heading">New Invoice</div>
+    <hr>
+    <div class="main-content">
+        <form action="">
+
+            
+            <div class="table-form">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer Name</th>
+                            <th>Address</th>
+                            <!-- Remove the Invoice No. header -->
+                            <th>Payment Type</th>
+                            <th>Date</th>
+                            <th>Contact No.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                
+                                <select id="customerSelect" onchange="fetchCustomerInfo()">
+                                    <% defaultCustomer.forEach(customer => { %>
+                                        <option value="<%= customer.customer_name %>">
+                                            <%= customer.customer_name %>
+                                        </option>
+                                    <% }); %>
+                                </select>
+                            </td>
+                            <td><input type="text" id="address" name="address" placeholder="Address"></td>
+                         
+                            <td>
+                                <select name="" id="pay_type">
+                                    <option value="cash">Cash Payment</option>
+                                    <option value="online">Online Payment</option>
+                                </select>
+                            </td>
+                            <td><input type="date" name="date" id="date"></td>
+                            <td><input type="text" name="contact_no" id="contact_no" placeholder="Contact No."></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="btn">
+                    <button>Add New Customer</button>
+                </div>
+                <hr>
+
+                <!-- Medicine Info -->
+                <div class="table-form">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Medicine Name</th>
+                                <th>Batch ID</th>
+                                <th>Ava.Qty.</th>
+                                <th>EX.Date (mm/yy)</th>
+                                <th>Quantity</th>
+                                <th>MRP</th>
+                                <th>Discount(%)</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                 
+                                    <select id="medicineSelect" onchange="fetchMedicineInfo()">
+                                        <% defaultMedicine.forEach(medicine => { %>
+                                            <option value="<%= medicine.medicineName %>">
+                                                <%= medicine.medicineName %>
+                                            </option>
+                                        <% }); %>
+                                    </select>
+                                </td>
+                                <td><input type="text" id="batch_id" name="batch_id"></td>
+                                <td><input type="text" id="ava_qty" name="ava_qty"></td>
+                                <td><input type="text" id="ex_date" name="ex_date"></td>
+                                <td><input type="text" id="quantity" name="quantity" placeholder="0"></td>
+                                <td><input type="text" name="mrp" id="mrp"></td>
+                                <td><input type="text" name="discount" id="discount"></td>
+                                <td><input type="text" name="total" id="total"></td>
+                                <td>
+                                    <div class="btn-g">
+                                        <button class="add-btn">Add</button>
+                                        <button class="del-btn">Delete</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                   
+                    <div class="main-div" style="margin-bottom: 15px;">
+                        <div class="sec-div">
+                            <label for="total">Paid Amount : </label>
+                            <br>
+                            <input type="text" name="paid_amount" id="paid_amount">
+                        </div>
+                        <div class="sec-div">
+                            <label for="total_discount">Change :</label>
+                            <br>
+                            <input type="text" name="change" id="change" placeholder="0">
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+            </div>
+
+            <div class="btn-add">
+                <button>Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script src="./your-script.js"></script>
+<script>
+  
+    function fetchCustomerInfo() {
+        var selectedCustomer = document.getElementById('customerSelect').value;
+
+        fetch('/api/getCustomerInfo?customer=' + selectedCustomer)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('address').value = data.address;
+                document.getElementById('contact_no').value = data.contact_no;
+            })
+            .catch(error => console.error('Error fetching customer information:', error));
+    }
+
+    function fetchMedicineInfo() {
+        var selectedMedicine = document.getElementById('medicineSelect').value;
+
+        fetch('/api/getMedicineInfo?medicine=' + selectedMedicine)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('batch_id').value = data.batchId;
+                document.getElementById('ava_qty').value = data.quantity;
+                document.getElementById('ex_date').value = data.expirationDate;
+                document.getElementById('mrp').value = data.mrp;
+            })
+            .catch(error => console.error('Error fetching medicine information:', error));
+    }
+</script>
+</body>
+
+</html>

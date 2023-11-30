@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical Management System</title>
+
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/addMedicine.css">
+    <link rel="stylesheet" href="./css/manageMedicineStock.css">
 
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +30,7 @@
             </button>
             <div class="dropdown-content">
                 <a href="/newInvoice">Add New Invoice</a>
-                <a href="./assets/pages/invoice/manageInvoice.html">Manage Invoice</a>
+                <a href="../invoice/manageInvoice.html">Manage Invoice</a>
             </div>
         </div>
         <div class="dropdown">
@@ -72,20 +75,62 @@
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-                <a href="./assets/pages/report/purchaseReport.html">Purchase Report</a>
-                <a href="./assets/pages/report/salesReport.html">Sales Report</a>
+                <a href="../report/purchaseReport.html">Purchase Report</a>
+                <a href="../report/salesReport.html">Sales Report</a>
             </div>
         </div>
 
     </div>
 
 
-    <!-- DashBoard -->
+    <!-- Manage Customer -->
     <div class="main-container">
-        <div class="container-heading">DashBoard</div>
+        <div class="container-heading">Manage Customer </div>
         <hr>
-    </div>
+        <div class="main-content">
+            <!-- <form action=""> -->
 
+                <div class="form-two-col">
+                    <label> Search :</label>
+                    <input type="text" name="supplier" id="supplier" placeholder="By Supplier">
+                </div>
+
+                <hr>
+
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>SL.</th>
+                            
+                            <th>Customer Name</th>
+                            <th>Contact Number</th>
+                            <th>Address</th>
+                            <th>Doctor's Name</th>
+                            <th>Doctor's Address</th>
+                            <th>Action</th>
+                        </tr>
+                        <% customers.forEach((customer, index) => { %>
+                            <tr>
+                                <td><%= index + 1 %></td>
+                              
+                                <td><%= customer.customer_name %></td>
+                                <td><%= customer.contact_number %></td>
+                                <td><%= customer.address %></td>
+                                <td><%= customer.doct_name %></td>
+                                <td><%= customer.doct_add %></td>
+                                <td>
+                                    <div class="btn-g">
+                                        <button class="edit-btn">edit</button>
+                                        <button class="del-btn">Delete</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </table>
+                </div>
+            <!-- </form> -->
+        </div>
+    </div>
 </body>
 
 </html>

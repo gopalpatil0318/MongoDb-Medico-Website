@@ -52,7 +52,7 @@ const Purchase = mongoose.model("purchase", purchaseSchema);
 const medicineStockSchema = new mongoose.Schema({
     medicineName: String,
     packing: String,
-    genericName: String,
+    genericName: String, 
     batchId: String,
     expirationDate: Date,
     supplier: String,
@@ -65,6 +65,25 @@ const medicineStockSchema = new mongoose.Schema({
 const MedicineStock = mongoose.model("medicine_stock", medicineStockSchema);
 
 
+
+const customerSchema = new mongoose.Schema({
+    customer_name: {
+        type: String,
+        required: true,
+    },
+    contact_number: {
+        type: String,
+        required: true,
+    },
+    address: {
+        type: String,
+        required: true,
+    },
+    doct_name: String,
+    doct_add: String,
+});
+
+const Customer = mongoose.model('Customer', customerSchema);
 
 
 
@@ -276,6 +295,7 @@ app.post("/addPurchase", async (req, res) => {
             medicineName,
             packing,
             genericName,
+            genericName,
             batchId,
             expirationDate,
             supplier: supplierName,
@@ -302,6 +322,26 @@ app.post("/addPurchase", async (req, res) => {
     } catch (error) {
         console.error("Error adding data:", error);
         res.status(500).send("Internal Server Error");
+    }
+});
+
+
+// Example route to fetch Generic Name based on Medicine Name
+app.get('/api/getGenericName', async (req, res) => {
+    const selectedMedicine = req.query.medicine;
+
+    try {
+        
+        const medicine = await Medicine.findOne({ medicine_name: selectedMedicine });
+        
+        if (medicine) {
+            res.json({ genericName: medicine.generic_name });
+        } else {
+            res.status(404).json({ error: 'Medicine not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching Generic Name:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
@@ -338,6 +378,101 @@ app.delete('/deletePurchase/:id', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+
+app.get('/addCustomer', (req, res) => {
+    res.render('addCustomer');
+});
+
+app.post('/addCustomer', async (req, res) => {
+    try {
+        const { customer_name, contact_number, address, doct_name, doct_add } = req.body;
+
+        
+        const customer = new Customer({
+            customer_name,
+            contact_number,
+            address,
+            doct_name,
+            doct_add,
+        });
+
+        
+        await customer.save();
+
+        res.redirect('/manageCustomer');
+    } catch (error) {
+        console.error('Error adding customer:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+app.get('/manageCustomer', async (req, res) => {
+    try {
+        // Fetch all customers from the database
+        const customers = await Customer.find();
+
+        // Render the manageCustomer.ejs page with the fetched customer data
+        res.render('manageCustomer', { customers });
+    } catch (error) {
+        console.error('Error fetching customers:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+app.get('/newInvoice', async (req, res) => {
+    try {
+        
+        const defaultCustomer = await Customer.find();
+        const defaultMedicine = await MedicineStock.find();
+
+        
+        res.render('newInvoice', {
+            defaultCustomer: defaultCustomer,
+            defaultMedicine: defaultMedicine,
+        });
+    } catch (error) {
+        console.error('Error fetching default customer and medicine:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+app.get('/api/getCustomerInfo', async (req, res) => {
+    const customerName = req.query.customer;
+
+    try {
+        const customerInfo = await Customer.findOne({ customer_name: customerName });
+        
+        if (customerInfo) {
+            res.json({
+                address: customerInfo.address,
+                contact_no: customerInfo.contact_number
+            });
+        } else {
+            res.status(404).json({ error: 'Customer not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching customer information:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
+
+
+app.get('/api/getMedicineInfo', async (req, res) => {
+    const medicineName = req.query.medicine;
+
+    try {
+        const medicineInfo = await MedicineStock.findOne({ medicineName: medicineName });
+        res.json(medicineInfo);
+    } catch (error) {
+        console.error('Error fetching medicine information:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 
 
 app.listen(port, () => {

@@ -28,7 +28,7 @@
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-                <a href="../invoice/newInvoice.html">Add New Invoice</a>
+                <a href="/newInvoice">Add New Invoice</a>
                 <a href="../invoice/manageInvoice.html">Manage Invoice</a>
             </div>
         </div>
@@ -37,8 +37,8 @@
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-                <a href="#">Add New Customer</a>
-                <a href="#">Manage Customer</a>
+                <a href="/addCustomer">Add New Customer</a>
+                <a href="/manageCustomer">Manage Customer</a>
             </div>
         </div>
         <div class="dropdown">
@@ -129,6 +129,7 @@
                         <thead>
                             <tr>
                                 <th>Medicine Name</th>
+                                <th>Generic Name</th>
                                 <th>Packing</th>
                                 <th>Batch ID</th>
                                 <th>EX.Date (mm/yy)</th>
@@ -150,6 +151,7 @@
                                             <% }); %>
                                     </select>
                                 </td>
+                                <td><input type="text" name="generic_name" id="generic_name" readonly></td>
                                 <td><input type="text" id="packing" name="packing"></td>
                                 <td><input type="text" id="batch_id" name="batch_id"></td>
                                 <td> <input type="date" name="date1" id="date"></td>
@@ -227,7 +229,24 @@
         document.getElementById("total").value = grandTotal;
     }
 </script>
+<script>
+    const medicineDropdown = document.getElementById('medicine_name');
+    const genericNameInput = document.getElementById('generic_name');
 
+    medicineDropdown.addEventListener('change', () => {
+        const selectedMedicine = medicineDropdown.value;
+
+        // Fetch the associated Generic Name using an AJAX request
+        // Replace this URL with the actual endpoint to fetch Generic Name based on Medicine Name
+        fetch(`/api/getGenericName?medicine=${selectedMedicine}`)
+            .then(response => response.json())
+            .then(data => {
+                // Update the Generic Name input field
+                genericNameInput.value = data.genericName;
+            })
+            .catch(error => console.error('Error fetching Generic Name:', error));
+    });
+</script>
 </body>
 
 </html>

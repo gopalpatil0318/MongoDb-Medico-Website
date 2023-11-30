@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical Management System</title>
+    
     <link rel="stylesheet" href="./css/styles.css">
-
+    <link rel="stylesheet" href="./css/addMedicine.css">
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +28,7 @@
             </button>
             <div class="dropdown-content">
                 <a href="/newInvoice">Add New Invoice</a>
-                <a href="./assets/pages/invoice/manageInvoice.html">Manage Invoice</a>
+                <a href="../invoice/manageInvoice.html">Manage Invoice</a>
             </div>
         </div>
         <div class="dropdown">
@@ -72,19 +73,56 @@
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-                <a href="./assets/pages/report/purchaseReport.html">Purchase Report</a>
-                <a href="./assets/pages/report/salesReport.html">Sales Report</a>
+                <a href="../report/purchaseReport.html">Purchase Report</a>
+                <a href="../report/salesReport.html">Sales Report</a>
             </div>
         </div>
 
     </div>
 
 
-    <!-- DashBoard -->
+    <!-- Add Customer -->
     <div class="main-container">
-        <div class="container-heading">DashBoard</div>
+        <div class="container-heading">Add Customer</div>
         <hr>
+        <div class="main-content">
+            <form action="/addCustomer" method="post">
+
+                <div class="form-col">
+                    <label for="customer_name">Customer Name :</label>
+                    <input type="text" name="customer_name" id="customer_name" placeholder="Name" required>
+                </div>
+
+                <div class="form-col">
+                    <label for="contact_number">Contact Number :</label>
+                    <input type="text" name="contact_number" id="contact_number" placeholder="Contact Number" required>
+                </div>
+
+                <div class="form-col">
+                    <label for="address">Address :</label>
+                    <input type="text" name="address" id="address" placeholder="Address" required>
+                </div>
+
+                <div class="form-col">
+                    <label for="doct_name">Doctor's Name : </label>
+                    <input type="text" name="doct_name" id="doct_name" placeholder="Doctor's Name">
+                </div>
+
+                <div class="form-col">
+                    <label for="doct_add">Doctor's Address : </label>
+                    <input type="text" name="doct_add" id="doct_add" placeholder="Doctor's Address">
+                </div>
+
+                <br>
+                <hr>
+
+                <div class="btn-add">
+                    <button type="submit">Add</button>
+                </div>
+            </form>
+        </div>
     </div>
+
 
 </body>
 
