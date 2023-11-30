@@ -12,7 +12,8 @@
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;0,900;1,500;1,700;1,900&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;0,900;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
 </head>
 
@@ -47,7 +48,7 @@
             <div class="dropdown-content">
                 <a href="/addMedicine">Add New Medicine</a>
                 <a href="/manageMedicine">Manage Medicine</a>
-                <a href="../medicine/manageMedicineStock.html">Manage Medicine Stock</a>
+                <a href="/manageMedicineStock">Manage Medicine Stock</a>
             </div>
         </div>
         <div class="dropdown">
@@ -64,8 +65,8 @@
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-                <a href="../purchase/addPurchase.html">Add New Purchase</a>
-                <a href="../purchase/managePurchase.html">Manage Purchase</a>
+                <a href="/addPurchase">Add New Purchase</a>
+                <a href="/managePurchase">Manage Purchase</a>
             </div>
         </div>
         <div class="dropdown">
@@ -77,9 +78,7 @@
                 <a href="../report/salesReport.html">Sales Report</a>
             </div>
         </div>
-
     </div>
-
 
     <!-- Add Purchase -->
     <div class="main-container">
@@ -93,9 +92,11 @@
                         <label for="supplier">Supplier :</label>
                         <br>
                         <select name="supplier" id="supplier">
-                            <% suppliers.forEach(supplier => { %>
-                                <option value="<%= supplier.sname %>"><%= supplier.sname %></option>
-                            <% }); %>
+                            <% suppliers.forEach(supplier=> { %>
+                                <option value="<%= supplier.sname %>">
+                                    <%= supplier.sname %>
+                                </option>
+                                <% }); %>
                         </select>
                     </div>
                     <div class="sec-div">
@@ -119,7 +120,7 @@
                 </div>
 
                 <div class="btn">
-                    <button>Add New Supplier</button>
+                    <button><a href="/addSupplier">Add Supplier</a></button>
                 </div>
                 <hr>
 
@@ -142,46 +143,90 @@
                             <tr>
                                 <td>
                                     <select name="medicine_name" id="medicine_name">
-                                        <% medicines.forEach(medicine => { %>
-                                            <option value="<%= medicine.medicine_name %>"><%= medicine.medicine_name %></option>
-                                        <% }); %>
+                                        <% medicines.forEach(medicine=> { %>
+                                            <option value="<%= medicine.medicine_name %>">
+                                                <%= medicine.medicine_name %>
+                                            </option>
+                                            <% }); %>
                                     </select>
                                 </td>
                                 <td><input type="text" id="packing" name="packing"></td>
                                 <td><input type="text" id="batch_id" name="batch_id"></td>
-                                <td><input type="text" id="ex_date" name="ex_date"></td>
-                                <td><input type="text" id="quantity" name="quantity" placeholder="0"></td>
+                                <td> <input type="date" name="date1" id="date"></td>
+                                <td><input type="text" name="quantity" class="quantity" placeholder="0"
+                                        oninput="calculateAmount(this.parentNode.parentNode);"></td>
                                 <td><input type="text" name="mrp" id="mrp"></td>
-                                <td><input type="text" name="rate" id="rate"></td>
-                                <td><input type="text" name="amount" id="amount"></td>
+                                <td><input type="text" name="rate" class="rate" placeholder="0"
+                                        oninput="calculateAmount(this.parentNode.parentNode);"></td>
+                                <td><input type="text" name="amount" class="amount" readonly></td>
                                 <td>
                                     <div class="btn-g">
-                                        <button class="add-btn">edit</button>
-                                        <button class="del-btn">Delete</button>
+                                        <button class="add-btn" type="button" onclick="addNewMedicineRow()">Add</button>
+                                        <button class="del-btn" type="button">Delete</button>
                                     </div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <div class="generic-name">
-                        <label for="generic_name">If new medicine, Generic Name :</label>
-                        <input type="text" id="generic_name" class="generic_name" placeholder="Generic Name">
+                    <div class="btn">
+                        <button><a href="/addMedicine">Add New Medicine</a></button>
                     </div>
                     <hr>
 
                     <div class="grand-total">
                         <label for="total">Grand Total :</label>
-                        <input type="text" id="total" class="total">
+                        <input type="text" id="total" name="grand_total" class="total" readonly>
                     </div>
+
                 </div>
 
                 <div class="btn-add">
-                    <button>Add</button>
+                    <button type="submit">Add</button>
                 </div>
             </form>
         </div>
     </div>
+
+   
+<script>
+    function addNewMedicineRow() {
+        // Get the table body
+        var tableBody = document.querySelector("table tbody");
+
+        // Clone the last row in the table
+        var newRow = tableBody.rows[tableBody.rows.length - 1].cloneNode(true);
+
+        // Clear input values in the cloned row
+        var inputs = newRow.querySelectorAll('input');
+        inputs.forEach(function (input) {
+            input.value = '';
+        });
+
+        // Append the cloned row to the table
+        tableBody.appendChild(newRow);
+    }
+
+    function calculateAmount(row) {
+        var quantity = row.querySelector(".quantity").value;
+        var rate = row.querySelector(".rate").value;
+        var amount = quantity * rate;
+
+        row.querySelector(".amount").value = amount;
+        calculateGrandTotal();
+    }
+
+    function calculateGrandTotal() {
+        var amounts = document.querySelectorAll(".amount");
+        var grandTotal = 0;
+
+        amounts.forEach(function (element) {
+            grandTotal += parseFloat(element.value) || 0;
+        });
+
+        document.getElementById("total").value = grandTotal;
+    }
+</script>
 
 </body>
 

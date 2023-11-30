@@ -1,5 +1,6 @@
 const bodyParser = require("body-parser");
 const express = require("express");
+const methodOverride = require('method-override');
 const mongoose = require("mongoose");
 require("dotenv").config();
 
@@ -9,6 +10,7 @@ const port = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
+app.use(methodOverride('_method'));
 
 const MONGO_URL = process.env.MONGO_URL;
 
@@ -36,6 +38,36 @@ const medicineSchema = new mongoose.Schema({
 
 
 const Medicine = mongoose.model("medicine", medicineSchema);
+
+const purchaseSchema = new mongoose.Schema({
+    supplierName: String,
+    invoiceNumber: String,
+    paymentType: String,
+    purchaseDate: Date,
+    totalAmount: Number,
+});
+
+const Purchase = mongoose.model("purchase", purchaseSchema);
+
+const medicineStockSchema = new mongoose.Schema({
+    medicineName: String,
+    packing: String,
+    genericName: String,
+    batchId: String,
+    expirationDate: Date,
+    supplier: String,
+    quantity: Number,
+    mrp: Number,
+    rate: Number,
+    amount: Number,
+});
+
+const MedicineStock = mongoose.model("medicine_stock", medicineStockSchema);
+
+
+
+
+
 
 app.get("/", (req, res) => {
     res.render("index");
@@ -67,7 +99,7 @@ app.post("/addMedicine", async (req, res) => {
 
         await newMedicine.save();
         console.log("Medicine added successfully");
-        res.redirect("/");
+        res.redirect("/manageMedicine");
     } catch (error) {
         console.error("Error adding medicine:", error);
         res.status(500).send("Internal Server Error");
@@ -111,6 +143,39 @@ app.post("/deleteMedicine", async (req, res) => {
 
 
 
+app.get("/manageMedicineStock", async (req, res) => {
+    try {
+        const medicineStocks = await MedicineStock.find();
+        res.render("manageMedicineStock", { medicineStocks });
+    } catch (error) {
+        console.error("Error fetching medicine stocks:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+
+
+
+app.get("/outOfStock", async (req, res) => {
+    try {
+        const outOfStockMedicines = await MedicineStock.find({ quantity: 0 });
+        res.render("outOfStock", { medicineStocks: outOfStockMedicines });
+    } catch (error) {
+        console.error("Error fetching out-of-stock medicines:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+
+app.get("/expiredMedicine", async (req, res) => {
+    try {
+        const expiredMedicines = await MedicineStock.find({ expirationDate: { $lt: new Date() } });
+        res.render("expiredMedicine", { expiredMedicines });
+    } catch (error) {
+        console.error("Error fetching expired medicines:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
 
 
 
@@ -170,6 +235,107 @@ app.post("/deleteSupplier", async (req, res) => {
     } catch (error) {
         console.error("Error deleting supplier:", error);
         res.status(500).send("Internal Server Error");
+    }
+});
+
+
+
+
+app.get("/addPurchase", async (req, res) => {
+    try {
+        const suppliers = await Supplier.find();
+        const medicines = await Medicine.find();
+
+        res.render("addPurchase", { suppliers, medicines });
+    } catch (error) {
+        console.error("Error fetching suppliers and medicines:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+
+app.post("/addPurchase", async (req, res) => {
+    const supplierName = req.body.supplier;
+    const invoiceNumber = req.body.inv_no;
+    const paymentType = req.body.pay_type;
+    const purchaseDate = req.body.date;
+
+    const medicineName = req.body.medicine_name;
+    const packing = req.body.packing;
+    const genericName = req.body.generic_name; 
+    const batchId = req.body.batch_id;
+    const expirationDate = new Date(req.body.date1);
+    const quantity = req.body.quantity;
+    const mrp = req.body.mrp;
+    const rate = req.body.rate;
+    const amount = req.body.amount;
+    const grand_total = req.body.grand_total;
+
+    try {
+        const medicineStock = new MedicineStock({
+            medicineName,
+            packing,
+            genericName,
+            batchId,
+            expirationDate,
+            supplier: supplierName,
+            quantity,
+            mrp,
+            rate,
+            amount,
+        });
+
+        await medicineStock.save();
+
+        const purchase = new Purchase({
+            supplierName,
+            invoiceNumber,
+            paymentType,
+            purchaseDate,
+            totalAmount: grand_total,
+        });
+
+        await purchase.save();
+
+        console.log("Data added successfully");
+        res.redirect("/managePurchase");
+    } catch (error) {
+        console.error("Error adding data:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+
+app.get("/managePurchase", async (req, res) => {
+    try {
+       
+        const purchases = await Purchase.find();
+
+        res.render("managePurchase", { purchases });
+    } catch (error) {
+        console.error("Error fetching purchases:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+app.delete('/deletePurchase/:id', async (req, res) => {
+    const purchaseId = req.params.id;
+
+    try {
+        
+        const deletedPurchase = await Purchase.findByIdAndDelete(purchaseId);
+
+        if (!deletedPurchase) {
+            console.log('Purchase not found');
+            return res.status(404).send('Purchase not found');
+        }
+
+
+        console.log('Purchase deleted successfully');
+        res.redirect('/managePurchase'); 
+    } catch (error) {
+        console.error('Error deleting purchase:', error);
+        res.status(500).send('Internal Server Error');
     }
 });
 

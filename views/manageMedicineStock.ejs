@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical Management System</title>
+
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="./css/addMedicine.css">
     <link rel="stylesheet" href="./css/manageMedicineStock.css">
@@ -82,57 +83,108 @@
     </div>
 
 
-    <!-- Manage Supplier -->
+    <!-- Manage Medicine  Stock-->
     <div class="main-container">
-        <div class="container-heading">Manage Supplier </div>
+        <div class="container-heading">Manage Medicine Stock</div>
         <hr>
         <div class="main-content">
-            <form action="">
+            <!-- <form action=""> -->
 
                 <div class="form-two-col">
                     <label> Search :</label>
-                    <input type="text" name="supplier" id="supplier" placeholder="By Supplier">
+                    <input type="text" name="medicine_name" id="medicine_name" placeholder="By Medicine Name">
+                    <input type="text" name="generic_name" id="generic_name" placeholder="By Generic Name">
+                    <input type="text" name="supplier" id="supplier" placeholder="By Supplier Name">
                 </div>
 
+                <div class="btn-group">
+                    <div class="btn-red">
+                        <form action="/outOfStock" method="get">
+                            <button type="submit">Out of Stock</button>
+                        </form>
+                    </div>
+
+                    <div class="btn-yellow">
+                        <form action="/expiredMedicine" method="get">
+                            <button type="submit">Expired</button>
+                        </form>
+                    </div>
+
+                    <div class="btn-green">
+                        <form action="/manageMedicineStock" method="get">
+                            <button type="submit">Refresh</button>
+                        </form>
+                    </div>
+                </div>
+
+                
                 <hr>
 
-
+                
 
                 <div class="table-container">
                     <table>
                         <tr>
-                            <th>SL</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Contact Number</th> 
-                            <th>Address</th>
+                            <th>SL.</th>
+                            <th>Medicine Name</th>
+                            <th>Packing</th>
+                            <th>Generic Name</th>
+                            <th>Batch ID</th>
+                            <th>Expiry Date</th>
+                            <th>Supplier</th>
+                            <th>Qty.</th>
+                            <th>M.R.P</th>
+                            <th>Rate</th>
                             <th>Action</th>
                         </tr>
-    
-                      
-                        <% suppliers.forEach((supplier,index) => { %>
+                        <% medicineStocks.forEach((medicineStock, index)=> { %>
                             <tr>
-                                <td><%= index + 1 %></td>
-                                <td><%= supplier.sname %></td>
-                                <td><%= supplier.smail %></td>
-                                <td><%= supplier.scontact %></td>
-                                <td><%= supplier.saddress %></td>
+                                <td>
+                                    <%= index + 1 %>
+                                </td>
+                                <td>
+                                    <%= medicineStock.medicineName %>
+                                </td>
+                                <td>
+                                    <%= medicineStock.packing %>
+                                </td>
+                                <td>
+                                    <%= medicineStock.genericName %>
+                                </td>
+                                <td>
+                                    <%= medicineStock.batchId %>
+                                </td>
+                                <td>
+                                    <% if (medicineStock.expirationDate) { %>
+                                        <%= medicineStock.expirationDate.toDateString() %>
+                                    <% } else { %>
+                                        N/A
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <%= medicineStock.supplier %>
+                                </td>
+                                <td>
+                                    <%= medicineStock.quantity %>
+                                </td>
+                                <td>
+                                    <%= medicineStock.mrp %>
+                                </td>
+                                <td>
+                                    <%= medicineStock.rate %>
+                                </td>
                                 <td>
                                     <div class="btn-g">
-                                        <form action="/deleteSupplier" method="post">
-                                            <input type="hidden" name="supplierId" value="<%= supplier._id %>">
-                                            <button class="edit-btn" formaction="/editSupplier">edit</button>
-                                            <button class="del-btn" type="submit" name="deleteSupplier" value="Delete">Delete</button>
-                                        </form>
+                                        <button class="edit-btn">edit</button>
                                     </div>
                                 </td>
                             </tr>
-                        <% }); %>
+                            <% }); %>
                     </table>
                 </div>
-               
 
-            </form>
+
+            <!-- </form> -->
         </div>
     </div>
 
