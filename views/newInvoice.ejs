@@ -31,7 +31,7 @@
             </button>
             <div class="dropdown-content">
                 <a href="/newInvoice">Add New Invoice</a>
-                <a href="../invoice/manageInvoice.html">Manage Invoice</a>
+                <a href="/manageInvoice">Manage Invoice</a>
             </div>
         </div>
         <div class="dropdown">
@@ -83,156 +83,258 @@
 
     </div>
 
-<div class="main-container">
-    <div class="container-heading">New Invoice</div>
-    <hr>
-    <div class="main-content">
-        <form action="">
+    <div class="main-container">
+        <div class="container-heading">New Invoice</div>
+        <hr>
+        <div class="main-content">
+            <form action="/newInvoice" method="post">
 
-            
-            <div class="table-form">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Customer Name</th>
-                            <th>Address</th>
-                            <!-- Remove the Invoice No. header -->
-                            <th>Payment Type</th>
-                            <th>Date</th>
-                            <th>Contact No.</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                
-                                <select id="customerSelect" onchange="fetchCustomerInfo()">
-                                    <% defaultCustomer.forEach(customer => { %>
-                                        <option value="<%= customer.customer_name %>">
-                                            <%= customer.customer_name %>
-                                        </option>
-                                    <% }); %>
-                                </select>
-                            </td>
-                            <td><input type="text" id="address" name="address" placeholder="Address"></td>
-                         
-                            <td>
-                                <select name="" id="pay_type">
-                                    <option value="cash">Cash Payment</option>
-                                    <option value="online">Online Payment</option>
-                                </select>
-                            </td>
-                            <td><input type="date" name="date" id="date"></td>
-                            <td><input type="text" name="contact_no" id="contact_no" placeholder="Contact No."></td>
-                        </tr>
-                    </tbody>
-                </table>
 
-                <div class="btn">
-                    <button>Add New Customer</button>
-                </div>
-                <hr>
 
-                <!-- Medicine Info -->
                 <div class="table-form">
                     <table>
                         <thead>
                             <tr>
-                                <th>Medicine Name</th>
-                                <th>Batch ID</th>
-                                <th>Ava.Qty.</th>
-                                <th>EX.Date (mm/yy)</th>
-                                <th>Quantity</th>
-                                <th>MRP</th>
-                                <th>Discount(%)</th>
-                                <th>Total</th>
-                                <th>Action</th>
+                                <th>Customer Name</th>
+                                <th>Address</th>
+                                <!-- Remove the Invoice No. header -->
+                                <th>Payment Type</th>
+                                <th>Date</th>
+                                <th>Contact No.</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>
-                                 
-                                    <select id="medicineSelect" onchange="fetchMedicineInfo()">
-                                        <% defaultMedicine.forEach(medicine => { %>
-                                            <option value="<%= medicine.medicineName %>">
-                                                <%= medicine.medicineName %>
+
+                                    <select id="customerSelect" name="customer_name" onchange="fetchCustomerInfo()">
+                                        <option value="NO Customer">
+                                            Select Customer
+                                        </option>
+                                        <% defaultCustomer.forEach(customer=> { %>
+                                            <option name="customer_name" value="<%= customer.customer_name %>">
+                                                <%= customer.customer_name %>
                                             </option>
-                                        <% }); %>
+                                            <% }); %>
                                     </select>
                                 </td>
-                                <td><input type="text" id="batch_id" name="batch_id"></td>
-                                <td><input type="text" id="ava_qty" name="ava_qty"></td>
-                                <td><input type="text" id="ex_date" name="ex_date"></td>
-                                <td><input type="text" id="quantity" name="quantity" placeholder="0"></td>
-                                <td><input type="text" name="mrp" id="mrp"></td>
-                                <td><input type="text" name="discount" id="discount"></td>
-                                <td><input type="text" name="total" id="total"></td>
+                                <td><input type="text" id="address" name="address" placeholder="Address" readonly></td>
+
                                 <td>
-                                    <div class="btn-g">
-                                        <button class="add-btn">Add</button>
-                                        <button class="del-btn">Delete</button>
-                                    </div>
+                                    <select name="" id="pay_type">
+                                        <option value="cash">Cash Payment</option>
+                                        <option value="online">Online Payment</option>
+                                    </select>
                                 </td>
+                                <td><input type="date" name="date" id="date"></td>
+                                <td><input type="text" name="contact_no" id="contact_no" placeholder="Contact No."
+                                        readonly></td>
                             </tr>
                         </tbody>
                     </table>
 
-                   
-                    <div class="main-div" style="margin-bottom: 15px;">
-                        <div class="sec-div">
-                            <label for="total">Paid Amount : </label>
-                            <br>
-                            <input type="text" name="paid_amount" id="paid_amount">
-                        </div>
-                        <div class="sec-div">
-                            <label for="total_discount">Change :</label>
-                            <br>
-                            <input type="text" name="change" id="change" placeholder="0">
-                        </div>
+                    <div class="btn">
+
+                        <button><a href="/addCustomer">Add New Customer</a></button>
                     </div>
+                    <hr>
+
+                    <!-- Medicine Info -->
+                    <div class="table-form">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Medicine Name</th>
+                                    <th>Batch ID</th>
+                                    <th>Ava.Qty.</th>
+                                    <th>EX.Date (mm/yy)</th>
+                                    <th>Quantity</th>
+                                    <th>MRP</th>
+                                    <th>Discount(%)</th>
+                                    <th>Total</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <select id="medicineSelect" name="medicineId" onchange="fetchMedicineInfo()">
+                                            <% defaultMedicine.forEach(medicine => { %>
+                                                <option name="medicineId" value="<%= medicine._id %>">
+                                                    <%= medicine.medicineName %>
+                                                </option>
+                                            <% }); %>
+                                        </select>
+                                        
+                                    </td>
+                                    <!-- Add a hidden input field for storing the selected medicine ID -->
+                                    <input type="hidden" id="medicineId" name="medicine_id">
+                                    <!-- ... (your existing HTML) ... -->
+                                  
+                                    <input type="hidden" id="medicineId" name="medicine_id">
+                                    <td><input type="text" id="batch_id" name="batch_id" readonly></td>
+                                    <td><input type="text" id="ava_qty" name="ava_qty" readonly></td>
+                                    <td><input type="text" id="ex_date" name="ex_date" readonly></td>
+                                    <td><input type="text" id="quantity" name="quantity" placeholder="0"
+                                            oninput="updateTotal()"></td>
+                                    <td><input type="text" name="mrp" id="mrp" oninput="updateTotal()" readonly></td>
+                                    <td><input type="text" name="discount" id="discount" oninput="updateTotal()"></td>
+                                    <td><input type="text" name="total" id="total" readonly></td>
+                                    <td>
+                                        <div class="btn-g">
+                                            <button class="add-btn">Add</button>
+                                            <button class="del-btn">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- ... (your existing HTML) ... -->
+                        <div class="main-div" style="margin-bottom: 15px;">
+                            <div class="sec-div">
+                                <label for="total">Total Amount : </label>
+                                <br>
+                                <input type="text" name="total_amount" id="total_amount" placeholder="0" readonly>
+                            </div>
+                            <div class="sec-div">
+                                <label for="total_discount">Total Discount :</label>
+                                <br>
+                                <input type="text" name="total_discount" id="total_discount" placeholder="0" readonly>
+                            </div>
+                            <div class="sec-div">
+                                <label for="net_total">Net Total :</label>
+                                <br>
+                                <input type="text" name="net_total" id="net_total" readonly>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="main-div" style="margin-bottom: 15px;">
+                            <div class="sec-div">
+                                <label for="total">Paid Amount : </label>
+                                <br>
+                                <input type="text" name="paid_amount" id="paid_amount" oninput="updateChange()">
+                            </div>
+                            <div class="sec-div">
+                                <label for="change">Change :</label>
+                                <br>
+                                <input type="text" name="change" id="change" placeholder="0" readonly>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <hr>
                 </div>
 
-                <hr>
-            </div>
-
-            <div class="btn-add">
-                <button>Save</button>
-            </div>
-        </form>
+                <div class="btn-add">
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
 
-<script src="./your-script.js"></script>
-<script>
-  
-    function fetchCustomerInfo() {
-        var selectedCustomer = document.getElementById('customerSelect').value;
+    <script src="./your-script.js"></script>
+    <script>
+        function updateTotal() {
+            // Get values from input fields
+            var quantity = parseFloat(document.getElementById('quantity').value) || 0;
+            var mrp = parseFloat(document.getElementById('mrp').value) || 0;
+            var discount = parseFloat(document.getElementById('discount').value) || 0;
 
-        fetch('/api/getCustomerInfo?customer=' + selectedCustomer)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('address').value = data.address;
-                document.getElementById('contact_no').value = data.contact_no;
-            })
-            .catch(error => console.error('Error fetching customer information:', error));
-    }
+            // Calculate total
+            var total = (quantity * mrp).toFixed(2);  // Calculate total without discount
+            var discountedTotal = (total * (100 - discount) / 100).toFixed(2);  // Apply discount to total
 
-    function fetchMedicineInfo() {
-        var selectedMedicine = document.getElementById('medicineSelect').value;
+            // Update total field
+            document.getElementById('total').value = discountedTotal;
 
-        fetch('/api/getMedicineInfo?medicine=' + selectedMedicine)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('batch_id').value = data.batchId;
-                document.getElementById('ava_qty').value = data.quantity;
-                document.getElementById('ex_date').value = data.expirationDate;
-                document.getElementById('mrp').value = data.mrp;
-            })
-            .catch(error => console.error('Error fetching medicine information:', error));
-    }
-</script>
+            // Call other functions to update related fields
+            updateTotalAmount();
+            updateDiscountAmount();
+            updateNetTotal();
+        }
+
+
+        function updateTotalAmount() {
+            // Get values from input fields
+            var quantity = parseFloat(document.getElementById('quantity').value) || 0;
+            var mrp = parseFloat(document.getElementById('mrp').value) || 0;
+
+            // Calculate total amount
+            var totalAmount = (quantity * mrp).toFixed(2);
+
+            // Update total amount field
+            document.getElementById('total_amount').value = totalAmount;
+        }
+
+        function updateDiscountAmount() {
+            // Get values from input fields
+            var total = parseFloat(document.getElementById('total').value) || 0;
+            var totalAmount = parseFloat(document.getElementById('total_amount').value) || 0;
+
+            // Calculate discount amount
+            var discountAmount = (totalAmount - total).toFixed(2);
+
+            // Update discount amount field
+            document.getElementById('total_discount').value = discountAmount;
+        }
+
+
+
+
+        function updateNetTotal() {
+            // Get values from input fields
+            var total = parseFloat(document.getElementById('total').value) || 0;
+
+            // Update net total field
+            document.getElementById('net_total').value = total.toFixed(2);
+        }
+
+        function updateChange() {
+            // Get values from input fields
+            var paidAmount = parseFloat(document.getElementById('paid_amount').value) || 0;
+            var netTotal = parseFloat(document.getElementById('net_total').value) || 0;
+
+            // Calculate change
+            var change = (paidAmount - netTotal).toFixed(2);
+
+            // Update change field
+            document.getElementById('change').value = change;
+        }
+
+
+
+        function fetchCustomerInfo() {
+            var selectedCustomer = document.getElementById('customerSelect').value;
+
+            fetch('/api/getCustomerInfo?customer=' + selectedCustomer)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('address').value = data.address;
+                    document.getElementById('contact_no').value = data.contact_no;
+                })
+                .catch(error => console.error('Error fetching customer information:', error));
+        }
+
+        function fetchMedicineInfo() {
+    var selectedMedicineId = document.getElementById('medicineSelect').value;
+
+    fetch('/api/getMedicineInfo?medicine=' + selectedMedicineId)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('batch_id').value = data.batchId;
+            document.getElementById('ava_qty').value = data.quantity;
+            document.getElementById('ex_date').value = data.expirationDate;
+            document.getElementById('mrp').value = data.mrp;
+        })
+        .catch(error => console.error('Error fetching medicine information:', error));
+}
+
+    </script>
 </body>
 
 </html>

@@ -5,9 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical Management System</title>
-    
+
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="./css/addMedicine.css">
+    <link rel="stylesheet" href="./css/manageMedicineStock.css">
+
+    
+
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -81,48 +85,74 @@
     </div>
 
 
-    <!-- Add Customer -->
+    <!-- Manage Invoice-->
     <div class="main-container">
-        <div class="container-heading">Add Customer</div>
+        <div class="container-heading">Manage Invoice</div>
         <hr>
         <div class="main-content">
-            <form action="/addCustomer" method="post">
+            <form action="">
 
-                <div class="form-col">
-                    <label for="customer_name">Customer Name :</label>
-                    <input type="text" name="customer_name" id="customer_name" placeholder="Name" required>
+                <div class="form-two-col">
+                    <label> Search :</label>
+                    <input type="text" name="invoice" id="invoice" placeholder="By Invoice Number">
+                    <input type="text" name="customer_name" id="customer_name" placeholder="By customer Name">
                 </div>
 
-                <div class="form-col">
-                    <label for="contact_number">Contact Number :</label>
-                    <input type="text" name="contact_number" id="contact_number" placeholder="Contact Number" required>
+
+                <div class="form-two-col">
+                    <label> By Invoice Date :</label>
+                    <input type="date" name="invoice_date" id="invoice_date" >
+                    
                 </div>
 
-                <div class="form-col">
-                    <label for="address">Address :</label>
-                    <input type="text" name="address" id="address" placeholder="Address" required>
-                </div>
 
-                <div class="form-col">
-                    <label for="doct_name">Doctor's Name : </label>
-                    <input type="text" name="doct_name" id="doct_name" placeholder="Doctor's Name">
+                <div class="btn-group">
+                    <div class="btn-green">
+                        <button>Refresh</button>
+                    </div>
                 </div>
-
-                <div class="form-col">
-                    <label for="doct_add">Doctor's Address : </label>
-                    <input type="text" name="doct_add" id="doct_add" placeholder="Doctor's Address">
-                </div>
-
-                <br>
                 <hr>
 
-                <div class="btn-add">
-                    <button type="submit">Add</button>
-                </div>
+                <div class="table-container">
+                    <table>
+                      <tr>
+                        <th>SL.</th>
+                       
+                        <th>Customer Name</th>
+                        <th>Date</th>
+                        <th>Total Amount</th>
+                        <th>Total Discount</th>
+                        <th>Net Total</th>
+                        <th>Action</th>
+                      </tr>
+                      <% invoices.forEach((invoice, index) => { %>
+                        <tr>
+                          <td><%= index + 1 %></td>
+                        
+                          <td><%= invoice.customerName %></td>
+                          <td> <% if (invoice.date) { %>
+                            <%= invoice.date.toDateString() %>
+                        <% } else { %>
+                            N/A
+                        <% } %> %></td>
+
+                        
+                          <td><%= invoice.totalAmount %></td>
+                          <td><%= invoice.totalDiscount %></td>
+                          <td><%= invoice.netTotal %></td>
+                          <td>
+                            <div class="btn-g">
+                              <button class="edit-btn">edit</button>
+                              <button class="del-btn">Delete</button>
+                            </div>
+                          </td>
+                        </tr>
+                      <% }); %>
+                    </table>
+                  </div>
             </form>
         </div>
     </div>
-
 
 </body>
 

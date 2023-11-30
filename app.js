@@ -85,7 +85,30 @@ const customerSchema = new mongoose.Schema({
 
 const Customer = mongoose.model('Customer', customerSchema);
 
+const invoiceSchema = new mongoose.Schema({
+    customerName: {
+        type: String,
+        required: true,
+    },
+    date: {
+        type: Date,
+        required: true,
+    },
+    totalAmount: {
+        type: Number,
+        required: true,
+    },
+    totalDiscount: {
+        type: Number,
+        required: true,
+    },
+    netTotal: {
+        type: Number,
+        required: true,
+    },
+});
 
+const Invoice = mongoose.model('Invoice', invoiceSchema);
 
 
 app.get("/", (req, res) => {
@@ -326,7 +349,7 @@ app.post("/addPurchase", async (req, res) => {
 });
 
 
-// Example route to fetch Generic Name based on Medicine Name
+
 app.get('/api/getGenericName', async (req, res) => {
     const selectedMedicine = req.query.medicine;
 
@@ -461,11 +484,12 @@ app.get('/api/getCustomerInfo', async (req, res) => {
 
 
 
+// Assuming you have a route like this for fetching medicine information
 app.get('/api/getMedicineInfo', async (req, res) => {
-    const medicineName = req.query.medicine;
+    const medicineId = req.query.medicine;
 
     try {
-        const medicineInfo = await MedicineStock.findOne({ medicineName: medicineName });
+        const medicineInfo = await MedicineStock.findOne({ _id: medicineId });
         res.json(medicineInfo);
     } catch (error) {
         console.error('Error fetching medicine information:', error);
@@ -474,6 +498,80 @@ app.get('/api/getMedicineInfo', async (req, res) => {
 });
 
 
+
+
+app.post('/newInvoice', async (req, res) => {
+    try {
+        console.log('Received data:', req.body);
+        const {
+            customer_name,
+            date,
+            total_amount,
+            total_discount,
+            net_total,
+            quantity,
+            medicineId,
+        } = req.body;
+
+        const newInvoice = new Invoice({
+            customerName: customer_name,
+            date: new Date(date),
+            totalAmount: total_amount,
+            totalDiscount: total_discount,
+            netTotal: net_total,
+            // Assuming you have a field in your Invoice model to store medicines
+        });
+
+        // Save the invoice to get the _id
+        await newInvoice.save();
+
+        // Update medicine stock based on the selected medicine
+        try {
+            // Find the medicine stock in the database based on the medicine ID
+            const medicineStock = await MedicineStock.findOne({ _id: medicineId });
+
+            // Update the quantity in the medicine stock
+            if (medicineStock) {
+                medicineStock.quantity -= quantity;
+                // Save the updated medicine stock to the database
+                await medicineStock.save();
+            } else {
+                console.error(`Medicine stock not found for ${medicineId}`);
+                // Handle the case where the medicine stock is not found
+            }
+        } catch (error) {
+            console.error('Error updating medicine stock:', error);
+            // Handle the error appropriately
+            throw error;
+        }
+
+        // Update the invoice with the list of medicines
+
+        console.log('Invoice added successfully');
+        res.redirect('/manageInvoice');
+    } catch (error) {
+        console.error('Error adding invoice:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
+
+
+app.get('/manageInvoice', async (req, res) => {
+    try {
+      
+      const invoices = await Invoice.find();
+  
+     
+      res.render('manageInvoice', { invoices });
+    } catch (error) {
+      console.error('Error fetching invoice data:', error);
+    
+      res.status(500).send('Internal Server Error');
+    }
+  });
 
 app.listen(port, () => {
     console.log(`server is running port ${port}`);
