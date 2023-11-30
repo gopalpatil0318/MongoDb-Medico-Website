@@ -1,23 +1,18 @@
 {
-  "dependencies": {
-    "express": "^4.18.2"
-  },
-  "name": "mongodb-medico-website",
+  "name": "techblog-web-app",
   "version": "1.0.0",
-  "description": "\"Semister Project\"",
-  "main": "app.js",
-  "devDependencies": {},
+  "description": "",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gopalpatil0318/MongoDb-Medico-Website.git"
-  },
-  "author": "Gopal Patil",
+  "author": "Gopal PAtil",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/gopalpatil0318/MongoDb-Medico-Website/issues"
-  },
-  "homepage": "https://github.com/gopalpatil0318/MongoDb-Medico-Website#readme"
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.2"
+  }
 }

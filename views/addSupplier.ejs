@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Management System</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/addMedicine.css">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;0,900;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Nav Bar -->
+    <div class="big-heading">Medical Management System</div>
+    <div class="navbar">
+        <a href="/">Dashboard</a>
+        <div class="dropdown">
+            <button class="dropbtn">Invoice
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="../invoice/newInvoice.html">Add New Invoice</a>
+                <a href="../invoice/manageInvoice.html">Manage Invoice</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Customer
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="#">Add New Customer</a>
+                <a href="#">Manage Customer</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Medicine
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="/addMedicine">Add New Medicine</a>
+                <a href="/manageMedicine">Manage Medicine</a>
+                <a href="../medicine/manageMedicineStock.html">Manage Medicine Stock</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Supplier
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="/addSupplier">Add New Supplier</a>
+                <a href="/manageSupplier">Manage Supplier</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Purchase
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="../purchase/addPurchase.html">Add New Purchase</a>
+                <a href="../purchase/managePurchase.html">Manage Purchase</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Report
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="../report/purchaseReport.html">Purchase Report</a>
+                <a href="../report/salesReport.html">Sales Report</a>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Add Supplier -->
+    <div class="main-container">
+        <div class="container-heading">Add Supplier</div>
+        <hr>
+        <div class="main-content">
+            <form action="/addSupplier" method ="post">
+
+                <div class="form-col">
+                    <label for="supplier_name">Supplier Name :</label>
+                    <input type="text" name="sname" id="supplier_name" placeholder="Name">
+                </div>
+
+                <div class="form-col">
+                    <label for="supplier_mail">Supplier Email :</label>
+                    <input type="text" name="smail" id="supplier_mail" placeholder="Email">
+                </div>
+
+                <div class="form-col">
+                    <label for="supplier_contact">Supplier Contact Number :</label>
+                    <input type="text" name="scontact" id="supplier_contact" placeholder="Contact Number">
+                </div>
+
+                <div class="form-col">
+                    <label for="supplier_address">Supplier Address :</label>
+                    <input type="text" name="saddress" id="supplier_address" placeholder="Address">
+                </div>
+                
+                <br>
+                <hr>
+
+                <div class="btn-add">
+                    <button type="submit">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

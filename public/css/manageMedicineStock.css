@@ -1,0 +1,83 @@
+/* Default values changes */
+.main-content {
+    padding: 15px;
+}
+
+/* Manage Medicine */
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.btn-group button {
+    width: 95px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+.btn-group .btn-red button {
+    background-color: red;
+    color: white;
+}
+
+.btn-group .btn-yellow button {
+    background-color: yellow;
+}
+
+.btn-group .btn-green button {
+    background-color: green;
+    color: white;
+}
+
+
+/* table */
+.table-container {
+    margin: 10px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    border: 1px solid #000000;
+    text-align: center;
+    padding: 8px;
+    font-weight: 500;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+/* Table btn */
+.btn-g{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.btn-g button{
+    width: 60px;
+    height: 20px;
+    border: none;
+    border-radius: 10px;
+}
+
+.btn-g .edit-btn{
+    background-color: rgb(47, 127, 47);
+    color: white;
+}
+
+.btn-g .del-btn{
+    background-color: red;
+    color: white;
+}

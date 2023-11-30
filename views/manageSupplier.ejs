@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Management System</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/addMedicine.css">
+    <link rel="stylesheet" href="./css/manageMedicineStock.css">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;0,900;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Nav Bar -->
+    <div class="big-heading">Medical Management System</div>
+    <div class="navbar">
+        <a href="/">Dashboard</a>
+        <div class="dropdown">
+            <button class="dropbtn">Invoice
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="./assets/pages/invoice/newInvoice.html">Add New Invoice</a>
+                <a href="./assets/pages/invoice/manageInvoice.html">Manage Invoice</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Customer
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="./assets/pages/customer/addCustomer.html">Add New Customer</a>
+                <a href="./assets/pages/customer/manageCustomer.html">Manage Customer</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Medicine
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="/addMedicine">Add New Medicine</a>
+                <a href="/manageMedicine">Manage Medicine</a>
+                <a href="./assets/pages/medicine/manageMedicineStock.html">Manage Medicine Stock</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Supplier
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="/addSupplier">Add New Supplier</a>
+                <a href="/manageSupplier">Manage Supplier</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Purchase
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="./assets/pages/purchase/addPurchase.html">Add New Purchase</a>
+                <a href="./assets/pages/purchase/managePurchase.html">Manage Purchase</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Report
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="./assets/pages/report/purchaseReport.html">Purchase Report</a>
+                <a href="./assets/pages/report/salesReport.html">Sales Report</a>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Manage Supplier -->
+    <div class="main-container">
+        <div class="container-heading">Manage Supplier </div>
+        <hr>
+        <div class="main-content">
+            <form action="">
+
+                <div class="form-two-col">
+                    <label> Search :</label>
+                    <input type="text" name="supplier" id="supplier" placeholder="By Supplier">
+                </div>
+
+                <hr>
+
+
+
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>SL</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Contact Number</th> 
+                            <th>Address</th>
+                            <th>Action</th>
+                        </tr>
+    
+                      
+                        <% suppliers.forEach((supplier,index) => { %>
+                            <tr>
+                                <td><%= index + 1 %></td>
+                                <td><%= supplier.sname %></td>
+                                <td><%= supplier.smail %></td>
+                                <td><%= supplier.scontact %></td>
+                                <td><%= supplier.saddress %></td>
+                                <td>
+                                    <div class="btn-g">
+                                        <form action="/deleteSupplier" method="post">
+                                            <input type="hidden" name="supplierId" value="<%= supplier._id %>">
+                                            <button class="edit-btn" formaction="/editSupplier">edit</button>
+                                            <button class="del-btn" type="submit" name="deleteSupplier" value="Delete">Delete</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </table>
+                </div>
+               
+
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
