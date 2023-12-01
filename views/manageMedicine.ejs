@@ -16,6 +16,78 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;0,900;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
+
+        <style>
+
+            @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600&display=swap');
+    
+            *{
+                font-family: Arial, Helvetica, sans-serif;
+                font-family: 'Rubik', sans-serif;
+            }
+    
+            body{
+                background-color: #ebf4f2;
+            }
+    
+            .big-heading{
+                background: #6bae9c;    
+                font-weight: 600;
+                font-size: 20px;
+                padding: 20px;
+                color: #fff;
+            }
+    
+            .container-heading h2{
+                
+                border-radius: 20px;
+                width: 30%;
+                margin: auto;
+                color: #6bae9c;
+                margin-top: 70px;
+               
+            }
+            
+            .main-container{
+                background-color: #fff;
+                box-shadow: 0px 5px 20px 5px #cee4de80;
+                width: 70%;
+                margin: auto;
+                z-index: -1;
+                
+                margin-bottom: 100px !important;
+                padding: 50px;
+                box-sizing: border-box;
+                
+            }
+    
+            .main-container input, .main-container select{
+                width: 100%;
+                padding: 20px;
+                box-sizing: border-box;
+                border-radius: 2px;
+                background: #cee4de50;
+                margin-bottom: 15px;
+                border: none;
+                margin-top: 5px;
+            }
+    
+            .main-container label{
+                color: #6bae9c;
+            }
+    
+            .main-container button{
+                background: linear-gradient(to bottom right, #14d8e8, #56f99f);
+                padding: 15px 50px;
+                border-radius: 5px;
+                color: #000;
+                border: none;
+                font-weight: bold;
+                
+            }
+        </style>
+
+
 </head>
 
 <body>
@@ -82,17 +154,17 @@
 
     </div>
 
+    <div class="container-heading"><h2>Manage Medicine</h2></div>
 
 
     <!-- Manage Medicine -->
     <div class="main-container">
-        <div class="container-heading">Manage Medicine</div>
-        <hr>
+       
         <div class="main-content">
             <!-- <form action=""> -->
-
-                <div class="form-two-col">
-                    <label> Search :</label>
+                <label> Search :</label>
+                <div style="display: flex; gap: 10px;">
+                    
                     <input type="text" name="medicine_name" id="medicine_name" placeholder="By Medicine Name">
                     <input type="text" name="generic_name" id="generic_name" placeholder="By Generic Name">
                     <input type="text" name="supplier" id="supplier" placeholder="By Supplier Name">
@@ -123,8 +195,8 @@
                     <div class="btn-g">
                         <form action="/deleteMedicine" method="post">
                             <input type="hidden" name="medicineId" value="<%= medicine._id %>">
-                            <button class="edit-btn" formaction="/editSupplier">edit</button>
-                            <button class="del-btn" type="submit" name="deleteMedicine" value="Delete">Delete</button>
+                            <button style="margin-right: 5px; padding: 10px;" formaction="/editSupplier">edit</button>
+                            <button style="padding: 10px;" type="submit" name="deleteMedicine" value="Delete">Delete</button>
                         </form>
                     </div>
                 </td>

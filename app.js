@@ -12,7 +12,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(methodOverride('_method'));
 
-const MONGO_URL = process.env.MONGO_URL;
+const MONGO_URL ="mongodb+srv://patilgopal0318:patilgopal0318@medico.6l5qddl.mongodb.net/Medico";
 
 mongoose.connect(MONGO_URL).then(() => {
     console.log("DB Connected");
