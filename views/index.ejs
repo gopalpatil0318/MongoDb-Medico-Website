@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical Management System</title>
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,6 +14,154 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;0,900;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
+
+        <style>
+
+            @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600&display=swap');
+    
+            *{
+                font-family: Arial, Helvetica, sans-serif;
+                font-family: 'Rubik', sans-serif;
+            }
+    
+            body{
+                background-color: #ebf4f2;
+            }
+    
+            .big-heading{
+                background: #6bae9c;    
+                font-weight: 600;
+                font-size: 20px;
+                padding: 20px;
+                color: #fff;
+            }
+    
+            .container-heading h2{
+                
+                border-radius: 20px;
+                width: 30%;
+                margin: auto;
+                color: #6bae9c;
+                margin-top: 70px;
+               
+            }
+            
+            .main-container{
+                background-color: #fff;
+                box-shadow: 0px 5px 20px 5px #cee4de80;
+                width: 70%;
+                margin: auto;
+                z-index: -1;
+                
+                margin-bottom: 100px !important;
+                padding: 50px;
+                box-sizing: border-box;
+                
+            }
+    
+            .main-container input, .main-container select{
+                width: 100%;
+                padding: 20px;
+                box-sizing: border-box;
+                border-radius: 2px;
+                background: #cee4de50;
+                margin-bottom: 15px;
+                border: none;
+                margin-top: 5px;
+            }
+    
+            .main-container label{
+                color: #6bae9c;
+            }
+    
+            .main-container button{
+                background: linear-gradient(to bottom right, #14d8e8, #56f99f);
+                padding: 15px 50px;
+                border-radius: 5px;
+                color: #000;
+                border: none;
+                font-weight: bold;
+                
+            }
+
+            .main_container{
+                width: 80%;
+                margin: auto;
+                display: flex;
+                
+            }
+
+            .main_left_container{
+                width: 70%;
+            }
+
+            .main_right_container{
+                width: 30%;
+            }
+
+            .container_panel h1{
+                color: #6bae9c;
+            }
+
+            .container_panel{
+                background-color: #fff;
+                box-shadow: 0px 5px 20px 5px #cee4de80;
+                width: 250px;
+                margin: auto;
+                z-index: -1;
+                padding: 20px 50px;
+                box-sizing: border-box;
+                display: inline-block;
+                border-radius: 10px;
+                margin: 10px;
+            }
+
+            .report_panel{
+                border: 3px solid #6bae9c;
+                border-radius: 10px;
+                padding: 30px;
+                margin: 10px;
+                height: 140px;
+            }
+
+            .report_panel h2{
+                color: #6bae9c;
+                margin-bottom: 20px;
+            }
+
+            .report_panel p{
+                margin: 10px 0;
+                background-color: #ffffff95;
+                padding: 10px 5px;
+                border-radius: 5px;
+            }
+
+            .main_bottom_container{
+                width: 80%;
+                margin: auto;
+                padding-bottom: 50px;
+            }
+
+            .main_bottom_container .container_panel{
+                width: 23%;
+            }
+
+            hr{
+                width: 80%;
+                border: 2px solid #6bae9c50;
+                margin: 50px auto;
+            }
+
+            .container_panel .fa{
+                font-size: 50px;
+                color: #6bae9c;
+                text-align: center;
+                margin-bottom: 5px;
+            }
+    
+        </style>
+
+
 </head>
 
 <body>
@@ -81,9 +230,73 @@
 
 
     <!-- DashBoard -->
-    <div class="main-container">
-        <div class="container-heading">DashBoard</div>
-        <hr>
+    <div class="container-heading">
+        <h2>DashBoard</h2>
+    </div>
+    <div class="main_container">
+        <div class="main_left_container">
+            <div class="container_panel">
+                <h1>6</h1>
+                <p>Total Customer</p>
+            </div>
+            <div class="container_panel">
+                <h1>6</h1>
+                <p>Total Customer</p>
+            </div>
+            <div class="container_panel">
+                <h1>6</h1>
+                <p>Total Customer</p>
+            </div>
+            <div class="container_panel">
+                <h1>6</h1>
+                <p>Total Customer</p>
+            </div>
+            <div class="container_panel">
+                <h1>6</h1>
+                <p>Total Customer</p>
+            </div>
+            <div class="container_panel">
+                <h1>6</h1>
+                <p>Total Customer</p>
+            </div>
+
+        </div>
+        <div class="main_right_container">
+            <div class="report_panel">
+                <h2>Today's Report</h2>
+                <p><b>Todays Sales: </b> 1200</p>
+                <p><b>Todays Sales: </b> 1200</p>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="main_bottom_container">
+        <div class="container_panel">
+            <i class="fa fa-address-card"></i>
+            <p>Total Customer</p>
+        </div>
+        <div class="container_panel">
+            <i class="fa fa-address-card"></i>
+            <p>Total Customer</p>
+        </div>
+        <div class="container_panel">
+            <i class="fa fa-address-card"></i>
+            <p>Total Customer</p>
+        </div>
+        <div class="container_panel">
+            <i class="fa fa-address-card"></i>
+            <p>Total Customer</p>
+        </div>
+        <div class="container_panel">
+            <i class="fa fa-address-card"></i>
+            <p>Total Customer</p>
+        </div>
+        <div class="container_panel">
+            <i class="fa fa-address-card"></i>
+            <p>Total Customer</p>
+        </div>
+
     </div>
 
 </body>
