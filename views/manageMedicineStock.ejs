@@ -16,6 +16,78 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;0,900;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600&display=swap');
+
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+            font-family: 'Rubik', sans-serif;
+        }
+
+        body {
+            background-color: #ebf4f2;
+        }
+
+        .big-heading {
+            background: #6bae9c;
+            font-weight: 600;
+            font-size: 20px;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .container-heading h2 {
+
+            border-radius: 20px;
+            width: 30%;
+            margin: auto;
+            color: #6bae9c;
+            margin-top: 70px;
+
+        }
+
+        .main-container {
+            background-color: #fff;
+            box-shadow: 0px 5px 20px 5px #cee4de80;
+            width: 70%;
+            margin: auto;
+            z-index: -1;
+
+            margin-bottom: 100px !important;
+            padding: 50px;
+            box-sizing: border-box;
+
+        }
+
+        .main-container input,
+        .main-container select {
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 2px;
+            background: #cee4de50;
+            margin-bottom: 15px;
+            border: none;
+            margin-top: 5px;
+        }
+
+        .main-container label {
+            color: #6bae9c;
+        }
+
+        .main-container button {
+            background: linear-gradient(to bottom right, #14d8e8, #56f99f);
+            padding: 15px 50px;
+            border-radius: 5px;
+            color: #000;
+            border: none;
+            font-weight: bold;
+
+        }
+    </style>
+
+
 </head>
 
 <body>
@@ -82,106 +154,120 @@
 
     </div>
 
-
+    <div class="container-heading">
+        <h2>Manage Medicine Stock</h2>
+    </div>
     <!-- Manage Medicine  Stock-->
     <div class="main-container">
-        <div class="container-heading">Manage Medicine Stock</div>
-        <hr>
+
         <div class="main-content">
             <!-- <form action=""> -->
+            <label> Search :</label>
+            <div class="form-two-col" style="display: flex; gap: 10px;">
+                <input type="text" name="medicine_name" id="medicine_name" placeholder="By Medicine Name">
+                <input type="text" name="generic_name" id="generic_name" placeholder="By Generic Name">
+                <input type="text" name="supplier" id="supplier" placeholder="By Supplier Name">
+            </div>
 
-                <div class="form-two-col">
-                    <label> Search :</label>
-                    <input type="text" name="medicine_name" id="medicine_name" placeholder="By Medicine Name">
-                    <input type="text" name="generic_name" id="generic_name" placeholder="By Generic Name">
-                    <input type="text" name="supplier" id="supplier" placeholder="By Supplier Name">
+            <div
+                style="display: flex; justify-content: space-between; width: 60%; margin-left: auto; padding-bottom: 30px;">
+                <div>
+                    <form action="/outOfStock" method="get">
+                        <button type="submit">Out of Stock</button>
+                    </form>
                 </div>
 
-                <div class="btn-group">
-                    <div class="btn-red">
-                        <form action="/outOfStock" method="get">
-                            <button type="submit">Out of Stock</button>
-                        </form>
-                    </div>
-
-                    <div class="btn-yellow">
-                        <form action="/expiredMedicine" method="get">
-                            <button type="submit">Expired</button>
-                        </form>
-                    </div>
-
-                    <div class="btn-green">
-                        <form action="/manageMedicineStock" method="get">
-                            <button type="submit">Refresh</button>
-                        </form>
-                    </div>
+                <div>
+                    <form action="/expiredMedicine" method="get">
+                        <button type="submit">Expired</button>
+                    </form>
                 </div>
 
-                
-                <hr>
-                <div class="container-heading">All Medicine's</div>
-                
+                <div>
+                    <form action="/manageMedicineStock" method="get">
+                        <button type="submit">Refresh</button>
+                    </form>
+                </div>
+            </div>
 
-                <div class="table-container">
-                    <table>
+
+        </div>
+    </div>
+    <div class="container-heading" style="margin-bottom: -20px;">
+        <h2 style="margin-top: -50px;">All Medicine's</h2>
+    </div>
+    <div class="main-container">
+
+        <div class="main-content">
+
+
+
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>SL.</th>
+                        <th>Medicine Name</th>
+                        <th>Packing</th>
+                        <th>Generic Name</th>
+                        <th>Batch ID</th>
+                        <th>Expiry Date</th>
+                        <th>Supplier</th>
+                        <th>Qty.</th>
+                        <th>M.R.P</th>
+                        <th>Rate</th>
+                        <th>Action</th>
+                    </tr>
+                    <% medicineStocks.forEach((medicineStock, index)=> { %>
+                        <!-- Inside the loop... -->
                         <tr>
-                            <th>SL.</th>
-                            <th>Medicine Name</th>
-                            <th>Packing</th>
-                            <th>Generic Name</th>
-                            <th>Batch ID</th>
-                            <th>Expiry Date</th>
-                            <th>Supplier</th>
-                            <th>Qty.</th>
-                            <th>M.R.P</th>
-                            <th>Rate</th>
-                            <th>Action</th>
-                        </tr>
-                        <% medicineStocks.forEach((medicineStock, index)=> { %>
-                            <tr>
-                                <td>
-                                    <%= index + 1 %>
-                                </td>
-                                <td>
-                                    <%= medicineStock.medicineName %>
-                                </td>
-                                <td>
-                                    <%= medicineStock.packing %>
-                                </td>
-                                <td>
-                                    <%= medicineStock.genericName %>
-                                </td>
-                                <td>
-                                    <%= medicineStock.batchId %>
-                                </td>
-                                <td>
-                                    <% if (medicineStock.expirationDate) { %>
-                                        <%= medicineStock.expirationDate.toDateString() %>
-                                    <% } else { %>
-                                        N/A
-                                    <% } %>
-                                </td>
-                                <td>
-                                    <%= medicineStock.supplier %>
-                                </td>
-                                <td>
-                                    <%= medicineStock.quantity %>
-                                </td>
-                                <td>
-                                    <%= medicineStock.mrp %>
-                                </td>
-                                <td>
-                                    <%= medicineStock.rate %>
-                                </td>
-                                <td>
-                                    <div class="btn-g">
-                                        <button class="edit-btn">edit</button>
+                            <td>
+                                <%= index + 1 %>
+                            </td>
+                            <td>
+                                <%= medicineStock.medicineName %>
+                            </td>
+                            <td>
+                                <%= medicineStock.packing %>
+                            </td>
+                            <td>
+                                <%= medicineStock.genericName %>
+                            </td>
+                            <td>
+                                <%= medicineStock.batchId %>
+                            </td>
+                            <td>
+                                <% if (medicineStock.expirationDate) { %>
+                                    <%= medicineStock.expirationDate.toDateString() %>
+                                        <% } else { %>
+                                            N/A
+                                            <% } %>
+                            </td>
+                            <td>
+                                <%= medicineStock.supplier %>
+                            </td>
+                            <td>
+                                <%= medicineStock.quantity %>
+                            </td>
+                            <td>
+                                <%= medicineStock.mrp %>
+                            </td>
+                            <td>
+                                <%= medicineStock.rate %>
+                            </td>
+                            <td>
+                                <form method="POST" action="/deleteMedicine">
+                                    <input type="hidden" name="medicineId" value="<%= medicineStock._id %>">
+                                    <div class="btn-g" style="display: flex;">
+                                        <button style="margin-right: 5px; padding: 10px;">edit</button>
+                                        <button type="submit" style="margin-right: 5px; padding: 10px;">Delete</button>
                                     </div>
-                                </td>
-                            </tr>
-                            <% }); %>
-                    </table>
-                </div>
+                                </form>
+                            </td>
+                        </tr>
+                        <% }); %>
+
+                </table>
+            </div>
 
 
             <!-- </form> -->

@@ -17,6 +17,97 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;0,900;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
+
+        <style>
+
+            @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600&display=swap');
+    
+            *{
+                font-family: Arial, Helvetica, sans-serif;
+                font-family: 'Rubik', sans-serif;
+            }
+    
+            body{
+                background-color: #ebf4f2;
+            }
+    
+            .big-heading{
+                background: #6bae9c;    
+                font-weight: 600;
+                font-size: 20px;
+                padding: 20px;
+                color: #fff;
+            }
+    
+            .container-heading h2{
+                
+                border-radius: 20px;
+                width: 30%;
+                margin: auto;
+                color: #6bae9c;
+                margin-top: 70px;
+               
+            }
+            
+            .main-container{
+                background-color: #fff;
+                box-shadow: 0px 5px 20px 5px #cee4de80;
+                width: 70%;
+                margin: auto;
+                z-index: -1;
+                
+                margin-bottom: 100px !important;
+                padding: 50px;
+                box-sizing: border-box;
+                
+            }
+    
+            .main-container input, .main-container select{
+                width: 100%;
+                padding: 20px;
+                box-sizing: border-box;
+                border-radius: 2px;
+                background: #cee4de50;
+                margin-bottom: 15px;
+                border: none;
+                margin-top: 5px;
+            }
+    
+            .main-container label{
+                color: #6bae9c;
+            }
+    
+            .main-container button{
+                background: linear-gradient(to bottom right, #14d8e8, #56f99f);
+                padding: 15px 50px;
+                border-radius: 5px;
+                color: #000;
+                border: none;
+                font-weight: bold;
+                
+            }
+
+            table{
+                text-align: left;
+            }
+
+            table input, table select{
+                width: 95% !important;
+            }
+
+            table button{
+                height: 50px;
+                margin-bottom: 10px;
+                margin-right: 10px;
+            }
+
+            hr{
+                border: 2px solid #f2f2f2;
+            }
+    
+        </style>
+
+
 </head>
 
 <body>
@@ -82,162 +173,197 @@
         </div>
 
     </div>
+    <div class="container-heading">
+        <h2>New Invoice</h2>
+    </div>
+    
+<div class="main-container" style="height: 730px;">
+    
+    <div class="main-content">
+        <form action="/newInvoice" method="post">
 
-    <div class="main-container">
-        <div class="container-heading">New Invoice</div>
-        <hr>
-        <div class="main-content">
-            <form action="/newInvoice" method="post">
+            
+            <div class="table-form">
+                <table style="width: 100%; text-align: left;">
+                    <thead>
+                        <tr>
+                            <th>Customer Name</th>
+                            <th>Address</th>
+                            <!-- Remove the Invoice No. header -->
+                            <th>Payment Type</th>
+                            <!-- <th>Date</th>
+                            <th>Contact No.</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                
+                                <select id="customerSelect" name="customer_name" onchange="fetchCustomerInfo()">
+                                    <option value="NO Customer">
+                                        Select Customer
+                                    </option>
+                                    <% defaultCustomer.forEach(customer=> { %>
+                                        <option name="customer_name" value="<%= customer.customer_name %>">
+                                            <%= customer.customer_name %>
+                                        </option>
+                                        <% }); %>
+                                </select>
+                            </td>
+                            <td><input type="text" id="address" name="address" placeholder="Address" style="width: 100%;"></td>
+                         
+                             <td>
+                                <select name="" id="pay_type">
+                                    <option value="cash">Cash Payment</option>
+                                    <option value="online">Online Payment</option>
+                                </select>
+                            </td>
+                            <!--<td><input type="date" name="date" id="date"></td>
+                            <td><input type="text" name="contact_no" id="contact_no" placeholder="Contact No."></td> -->
+                        </tr>
+                    </tbody>
+                </table>
+                <table style="width: 100%; text-align: left;">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Contact No.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="date" name="date" id="date"></td>
+                            <td><input type="text" name="contact_no" id="contact_no" placeholder="Contact No."></td>
+                            <td><button style="height: 50px;"><a href="/addCustomer">Add New Customer</a></button></td>
+                        </tr>
+                    </tbody>
+                </table>
 
+                <div class="btn">
+                    
+                </div>
+                <hr>
 
-
+                <!-- Medicine Info -->
                 <div class="table-form">
-                    <table>
+                    <table style="width: 100%; text-align: left; margin-left: -15px;">
                         <thead>
                             <tr>
-                                <th>Customer Name</th>
-                                <th>Address</th>
-                                <!-- Remove the Invoice No. header -->
-                                <th>Payment Type</th>
-                                <th>Date</th>
-                                <th>Contact No.</th>
+                                <th>Medicine Name</th>
+                                <th>Batch ID</th>
+                                <th>Ava.Qty.</th>
+                                <th>EX.Date (mm/yy)</th>
+                                <th>Quantity</th>
+                                <!-- <th>MRP</th>
+                                <th>Discount(%)</th>
+                                <th>Total</th>
+                                <th>Action</th> -->
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>
-
-                                    <select id="customerSelect" name="customer_name" onchange="fetchCustomerInfo()">
-                                        <option value="NO Customer">
-                                            Select Customer
+                                <td style="width: 300px;">
+                                 
+                                    <select id="medicineSelect" name="medicineId" onchange="fetchMedicineInfo()">
+                                        <option name="medicineId" value="No selected">
+                                           Select Medicine
                                         </option>
-                                        <% defaultCustomer.forEach(customer=> { %>
-                                            <option name="customer_name" value="<%= customer.customer_name %>">
-                                                <%= customer.customer_name %>
+                                        <% defaultMedicine.forEach(medicine => { %>
+                                            <option name="medicineId" value="<%= medicine._id %>">
+                                                <%= medicine.medicineName %>
                                             </option>
-                                            <% }); %>
+                                        <% }); %>
                                     </select>
                                 </td>
-                                <td><input type="text" id="address" name="address" placeholder="Address" readonly></td>
-
+                                <td><input type="text" id="batch_id" name="batch_id"></td>
+                                <td><input type="text" id="ava_qty" name="ava_qty"></td>
+                                <td><input type="text" id="ex_date" name="ex_date"></td>
+                                 <td><input type="text" id="quantity" name="quantity" placeholder="0"
+                                            oninput="updateTotal()"></td>
+                                <!-- <td><input type="text" name="mrp" id="mrp"></td>
+                                <td><input type="text" name="discount" id="discount"></td>
+                                <td><input type="text" name="total" id="total"></td>
                                 <td>
-                                    <select name="" id="pay_type">
-                                        <option value="cash">Cash Payment</option>
-                                        <option value="online">Online Payment</option>
-                                    </select>
+                                    <div class="btn-g">
+                                        <button class="add-btn">Add</button>
+                                        <button class="del-btn">Delete</button>
+                                    </div>
+                                </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table style="width: 100%; text-align: left; margin-left: -15px;">
+                        <thead>
+                            <tr>
+                                
+                                <th>MRP</th>
+                                <th>Discount(%)</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                
+                                <td><input type="text" name="mrp" id="mrp" oninput="updateTotal()" readonly></td>
+                                <td><input type="text" name="discount" id="discount" oninput="updateTotal()"></td>
+                                <td><input type="text" name="total" id="total" readonly></td>
+                                <td>
+                                    <div class="btn-g" style="display: flex;">
+                                        <button class="add-btn" style="height: 50px;">Add</button>
+                                        <button class="del-btn" style="height: 50px;">Delete</button>
+                                    </div>
                                 </td>
-                                <td><input type="date" name="date" id="date"></td>
-                                <td><input type="text" name="contact_no" id="contact_no" placeholder="Contact No."
-                                        readonly></td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <div class="btn">
-
-                        <button><a href="/addCustomer">Add New Customer</a></button>
+                   
+                    <div class="main-div" style="margin-bottom: 15px;">
+                        <div class="sec-div">
+                            <label for="total">Total Amount : </label>
+                            <br>
+                            <input type="text" name="total_amount" id="total_amount" placeholder="0" readonly>
+                        </div>
+                        <div class="sec-div">
+                            <label for="total_discount">Total Discount :</label>
+                            <br>
+                            <input type="text" name="total_discount" id="total_discount" placeholder="0" readonly>
+                        </div>
+                        <div class="sec-div">
+                            <label for="net_total">Net Total :</label>
+                            <br>
+                            <input type="text" name="net_total" id="net_total" readonly>
+                        </div>
                     </div>
                     <hr>
-
-                    <!-- Medicine Info -->
-                    <div class="table-form">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Medicine Name</th>
-                                    <th>Batch ID</th>
-                                    <th>Ava.Qty.</th>
-                                    <th>EX.Date (mm/yy)</th>
-                                    <th>Quantity</th>
-                                    <th>MRP</th>
-                                    <th>Discount(%)</th>
-                                    <th>Total</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <select id="medicineSelect" name="medicineId" onchange="fetchMedicineInfo()">
-                                            <% defaultMedicine.forEach(medicine => { %>
-                                                <option name="medicineId" value="<%= medicine._id %>">
-                                                    <%= medicine.medicineName %>
-                                                </option>
-                                            <% }); %>
-                                        </select>
-                                        
-                                    </td>
-                                    <!-- Add a hidden input field for storing the selected medicine ID -->
-                                    <input type="hidden" id="medicineId" name="medicine_id">
-                                    <!-- ... (your existing HTML) ... -->
-                                  
-                                    <input type="hidden" id="medicineId" name="medicine_id">
-                                    <td><input type="text" id="batch_id" name="batch_id" readonly></td>
-                                    <td><input type="text" id="ava_qty" name="ava_qty" readonly></td>
-                                    <td><input type="text" id="ex_date" name="ex_date" readonly></td>
-                                    <td><input type="text" id="quantity" name="quantity" placeholder="0"
-                                            oninput="updateTotal()"></td>
-                                    <td><input type="text" name="mrp" id="mrp" oninput="updateTotal()" readonly></td>
-                                    <td><input type="text" name="discount" id="discount" oninput="updateTotal()"></td>
-                                    <td><input type="text" name="total" id="total" readonly></td>
-                                    <td>
-                                        <div class="btn-g">
-                                            <button class="add-btn">Add</button>
-                                            <button class="del-btn">Delete</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <!-- ... (your existing HTML) ... -->
-                        <div class="main-div" style="margin-bottom: 15px;">
-                            <div class="sec-div">
-                                <label for="total">Total Amount : </label>
-                                <br>
-                                <input type="text" name="total_amount" id="total_amount" placeholder="0" readonly>
-                            </div>
-                            <div class="sec-div">
-                                <label for="total_discount">Total Discount :</label>
-                                <br>
-                                <input type="text" name="total_discount" id="total_discount" placeholder="0" readonly>
-                            </div>
-                            <div class="sec-div">
-                                <label for="net_total">Net Total :</label>
-                                <br>
-                                <input type="text" name="net_total" id="net_total" readonly>
-                            </div>
+                    <div class="main-div" style="margin-bottom: 15px;">
+                        <div class="sec-div">
+                            <label for="total">Paid Amount : </label>
+                            <br>
+                            <input type="text" name="paid_amount" id="paid_amount" oninput="updateChange()">
                         </div>
-                        <hr>
-                        <div class="main-div" style="margin-bottom: 15px;">
-                            <div class="sec-div">
-                                <label for="total">Paid Amount : </label>
-                                <br>
-                                <input type="text" name="paid_amount" id="paid_amount" oninput="updateChange()">
-                            </div>
-                            <div class="sec-div">
-                                <label for="change">Change :</label>
-                                <br>
-                                <input type="text" name="change" id="change" placeholder="0" readonly>
-                            </div>
+                        <div class="sec-div">
+                            <label for="change">Change :</label>
+                            <br>
+                            <input type="text" name="change" id="change" placeholder="0" readonly>
                         </div>
-
-
-
                     </div>
-
-                    <hr>
                 </div>
 
-                <div class="btn-add">
-                    <button type="submit">Save</button>
-                </div>
-            </form>
-        </div>
+                
+            </div>
+
+           
+            <div class="btn-add">
+                <button type="submit">Save</button>
+            </div>
+        </form>
     </div>
+</div>
 
 
-    <script src="./your-script.js"></script>
+<script src="./your-script.js"></script>
     <script>
         function updateTotal() {
             // Get values from input fields

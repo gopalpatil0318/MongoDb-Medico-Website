@@ -48,16 +48,19 @@ table {
 
 td,
 th {
-    border: 1px solid #000000;
+    border: 1px solid #1c5a4a50;
     text-align: center;
     padding: 8px;
     font-weight: 500;
 }
 
 tr:nth-child(even) {
-    background-color: #dddddd;
+    background-color: #cee4de50;
 }
 
+hr{
+    border: 2px solid #f2f2f2;
+}
 /* Table btn */
 .btn-g{
     display: flex;
@@ -67,17 +70,19 @@ tr:nth-child(even) {
 
 .btn-g button{
     width: 60px;
-    height: 20px;
+    height: 40px;
     border: none;
     border-radius: 10px;
+    color: #000 !important;
+   
 }
 
 .btn-g .edit-btn{
-    background-color: rgb(47, 127, 47);
-    color: white;
+    background-color: rgb(47, 127, 47) !important;
+    color: white !important;
 }
 
 .btn-g .del-btn{
-    background-color: red;
-    color: white;
+    background-color: red !important;
+    color: white !important;
 }

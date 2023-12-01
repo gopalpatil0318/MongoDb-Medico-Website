@@ -18,6 +18,76 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;0,900;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
+
+        <style>
+
+            @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600&display=swap');
+    
+            *{
+                font-family: Arial, Helvetica, sans-serif;
+                font-family: 'Rubik', sans-serif;
+            }
+    
+            body{
+                background-color: #ebf4f2;
+            }
+    
+            .big-heading{
+                background: #6bae9c;    
+                font-weight: 600;
+                font-size: 20px;
+                padding: 20px;
+                color: #fff;
+            }
+    
+            .container-heading h2{
+                
+                border-radius: 20px;
+                width: 30%;
+                margin: auto;
+                color: #6bae9c;
+                margin-top: 70px;
+               
+            }
+            
+            .main-container{
+                background-color: #fff;
+                box-shadow: 0px 5px 20px 5px #cee4de80;
+                width: 70%;
+                margin: auto;
+                z-index: -1;
+                
+                margin-bottom: 100px !important;
+                padding: 50px;
+                box-sizing: border-box;
+                
+            }
+    
+            .main-container input, .main-container select{
+                width: 100%;
+                padding: 20px;
+                box-sizing: border-box;
+                border-radius: 2px;
+                background: #cee4de50;
+                margin-bottom: 15px;
+                border: none;
+                margin-top: 5px;
+            }
+    
+            .main-container label{
+                color: #6bae9c;
+            }
+    
+            .main-container button{
+                background: linear-gradient(to bottom right, #14d8e8, #56f99f);
+                padding: 15px 50px;
+                border-radius: 5px;
+                color: #000;
+                border: none;
+                font-weight: bold;
+                
+            }
+        </style>
 </head>
 
 <body>
@@ -90,25 +160,26 @@
         <div class="container-heading">Manage Invoice</div>
         <hr>
         <div class="main-content">
-            <form action="">
+            <!-- <form action=""> -->
 
-                <div class="form-two-col">
+                
                     <label> Search :</label>
-                    <input type="text" name="invoice" id="invoice" placeholder="By Invoice Number">
-                    <input type="text" name="customer_name" id="customer_name" placeholder="By customer Name">
-                </div>
-
-
-                <div class="form-two-col">
-                    <label> By Invoice Date :</label>
-                    <input type="date" name="invoice_date" id="invoice_date" >
+                    <div style="display: flex; gap: 10px;">
                     
-                </div>
+                        <input type="text" name="invoice" id="invoice" placeholder="By Invoice Number">
+                        <input type="text" name="customer_name" id="customer_name" placeholder="By customer Name">
+                        <label> By Invoice Date :</label>
+                        <input type="date" name="invoice_date" id="invoice_date" >
+                    </div>
+                   
+
+
+                
 
 
                 <div class="btn-group">
-                    <div class="btn-green">
-                        <button>Refresh</button>
+                    <div>
+                        <button style="margin-right: 5px; padding: 10px;">Refresh</button>
                     </div>
                 </div>
                 <hr>
@@ -140,17 +211,27 @@
                           <td><%= invoice.totalAmount %></td>
                           <td><%= invoice.totalDiscount %></td>
                           <td><%= invoice.netTotal %></td>
-                          <td>
+                          <!-- <td>
                             <div class="btn-g">
                               <button class="edit-btn">edit</button>
                               <button class="del-btn">Delete</button>
                             </div>
-                          </td>
+                          </td> -->
+                          <td>
+                            <!-- Form for Delete -->
+                            <form method="POST" action="/deleteInvoice">
+                                <input type="hidden" name="invoiceId" value="<%= invoice._id %>">
+                                <div class="btn-g" style="display: flex;">
+                                    <button  style="margin-right: 5px; padding: 10px;">edit</button>
+                                    <button type="submit"  style="margin-right: 5px; padding: 10px;">Delete</button>
+                                </div>
+                            </form>
+                        </td>
                         </tr>
                       <% }); %>
                     </table>
                   </div>
-            </form>
+            <!-- </form> -->
         </div>
     </div>
 

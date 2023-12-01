@@ -111,13 +111,83 @@ const invoiceSchema = new mongoose.Schema({
 const Invoice = mongoose.model('Invoice', invoiceSchema);
 
 
-app.get("/", (req, res) => {
-    res.render("index");
+
+
+app.get('/', async (req, res) => {
+    try {
+        const totalCustomers = await Customer.countDocuments();
+        const totalSuppliers = await Supplier.countDocuments();
+        const totalMedicines = await Medicine.countDocuments();
+        const outOfStockMedicines = await MedicineStock.countDocuments({ quantity: { $lt: 1 } });
+        const expiredMedicines = await MedicineStock.countDocuments({ expirationDate: { $lt: new Date() } });
+        const totalInvoices = await Invoice.countDocuments();
+
+        const currentDate = new Date(new Date().toLocaleDateString());
+
+        console.log('Current Date:', currentDate);
+
+        // Calculate total amount for today's sales
+        const todaysSalesResult = await Invoice.aggregate([
+            {
+                $match: {
+                    date: { $gte: currentDate }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalAmount: { $sum: "$netTotal" }
+                }
+            }
+        ]);
+
+        console.log('Todays Sales Result:', todaysSalesResult);
+
+        const todaysSales = todaysSalesResult.length > 0 ? todaysSalesResult[0].totalAmount : 0;
+
+        // Calculate total amount for today's purchases
+        const todaysPurchasesResult = await Purchase.aggregate([
+            {
+                $match: {
+                    purchaseDate: { $gte: currentDate }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalAmount: { $sum: "$totalAmount" }
+                }
+            }
+        ]);
+
+        console.log('Todays Purchases Result:', todaysPurchasesResult);
+
+        const todaysPurchases = todaysPurchasesResult.length > 0 ? todaysPurchasesResult[0].totalAmount : 0;
+
+        res.render('index', {
+            totalCustomers,
+            totalSuppliers,
+            totalMedicines,
+            outOfStockMedicines,
+            expiredMedicines,
+            totalInvoices,
+            todaysSales,
+            todaysPurchases,
+        });
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        res.status(500).send('Internal Server Error');
+    }
 });
+
+
+
+
+
 
 app.get("/addMedicine", async function (req, res) {
     try {
-        const suppliers = await Supplier.find(); // Change here
+        const suppliers = await Supplier.find();
         res.render("addMedicine", { suppliers });
     } catch (error) {
         console.error("Error fetching suppliers:", error);
@@ -162,6 +232,24 @@ app.get("/manageMedicine", async (req, res) => {
     }
 });
 
+app.post('/deleteMedicine', async (req, res) => {
+    const medicineId = req.body.medicineId;
+
+    try {
+       
+        const result = await MedicineStock.findByIdAndDelete(medicineId);
+
+        if (!result) {
+           
+            return res.status(404).send('Medicine not found');
+        }
+
+        res.redirect('/manageMedicineStock'); 
+    } catch (error) {
+        console.error('Error deleting medicine:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 app.post("/deleteMedicine", async (req, res) => {
     const medicineId = req.body.medicineId;
@@ -175,7 +263,7 @@ app.post("/deleteMedicine", async (req, res) => {
         }
 
         console.log("Medicine deleted successfully");
-        res.redirect("/manageMedicine"); // Redirect to the medicine management page
+        res.redirect("/manageMedicine");
     } catch (error) {
         console.error("Error deleting medicine:", error);
         res.status(500).send("Internal Server Error");
@@ -432,14 +520,34 @@ app.post('/addCustomer', async (req, res) => {
 
 app.get('/manageCustomer', async (req, res) => {
     try {
-        // Fetch all customers from the database
+        
         const customers = await Customer.find();
 
-        // Render the manageCustomer.ejs page with the fetched customer data
+        
         res.render('manageCustomer', { customers });
     } catch (error) {
         console.error('Error fetching customers:', error);
         res.status(500).send('Internal Server Error');
+    }
+});
+
+
+app.post("/deleteCustomer", async (req, res) => {
+    const customerId = req.body.customerId;
+
+    try {
+        const deletedCustomer = await Customer.findOneAndDelete({ _id: customerId });
+
+        if (!deletedCustomer) {
+            console.log("Customer not found");
+            return res.status(404).send("Customer not found");
+        }
+
+        console.log("Customer deleted successfully");
+        res.redirect("/manageCustomer"); 
+    } catch (error) {
+        console.error("Error deleting customer:", error);
+        res.status(500).send("Internal Server Error");
     }
 });
 
@@ -484,7 +592,7 @@ app.get('/api/getCustomerInfo', async (req, res) => {
 
 
 
-// Assuming you have a route like this for fetching medicine information
+
 app.get('/api/getMedicineInfo', async (req, res) => {
     const medicineId = req.query.medicine;
 
@@ -519,36 +627,36 @@ app.post('/newInvoice', async (req, res) => {
             totalAmount: total_amount,
             totalDiscount: total_discount,
             netTotal: net_total,
-            // Assuming you have a field in your Invoice model to store medicines
+           
         });
 
-        // Save the invoice to get the _id
+       
         await newInvoice.save();
 
-        // Update medicine stock based on the selected medicine
+        
         try {
-            // Find the medicine stock in the database based on the medicine ID
+            
             const medicineStock = await MedicineStock.findOne({ _id: medicineId });
 
-            // Update the quantity in the medicine stock
+    
             if (medicineStock) {
                 medicineStock.quantity -= quantity;
-                // Save the updated medicine stock to the database
+               
                 await medicineStock.save();
             } else {
                 console.error(`Medicine stock not found for ${medicineId}`);
-                // Handle the case where the medicine stock is not found
+               
             }
         } catch (error) {
             console.error('Error updating medicine stock:', error);
-            // Handle the error appropriately
+            
             throw error;
         }
 
-        // Update the invoice with the list of medicines
+       
 
         console.log('Invoice added successfully');
-        res.redirect('/manageInvoice');
+        res.redirect('/');
     } catch (error) {
         console.error('Error adding invoice:', error);
         res.status(500).send('Internal Server Error');
@@ -572,6 +680,29 @@ app.get('/manageInvoice', async (req, res) => {
       res.status(500).send('Internal Server Error');
     }
   });
+
+
+
+app.post("/deleteInvoice", async (req, res) => {
+    const invoiceId = req.body.invoiceId;
+
+    try {
+        const deletedInvoice = await Invoice.findOneAndDelete({ _id: invoiceId });
+
+        if (!deletedInvoice) {
+            console.log("Invoice not found");
+            return res.status(404).send("Invoice not found");
+        }
+
+        console.log("Invoice deleted successfully");
+        res.redirect("/manageInvoice"); 
+    } catch (error) {
+        console.error("Error deleting invoice:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+
 
 app.listen(port, () => {
     console.log(`server is running port ${port}`);
