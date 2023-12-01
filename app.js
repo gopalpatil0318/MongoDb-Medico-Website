@@ -703,7 +703,8 @@ app.post("/deleteInvoice", async (req, res) => {
 });
 
 
+const PORT = process.env.PORT;
+app.listen(3000 || PORT, () => {
+    console.log("Server is running on port 3000");
 
-app.listen(port, () => {
-    console.log(`server is running port ${port}`);
-});
+})
