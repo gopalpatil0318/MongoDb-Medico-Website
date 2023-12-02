@@ -5,9 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical Management System</title>
-    
+  
+
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="./css/addMedicine.css">
+    <link rel="stylesheet" href="./css/manageMedicineStock.css">
+    <link rel="stylesheet" href="./css/salesReport.css">
+
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,50 +20,50 @@
         rel="stylesheet">
 
         <style>
-
             @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600&display=swap');
     
-            *{
+            * {
                 font-family: Arial, Helvetica, sans-serif;
                 font-family: 'Rubik', sans-serif;
             }
     
-            body{
+            body {
                 background-color: #ebf4f2;
             }
     
-            .big-heading{
-                background: #6bae9c;    
+            .big-heading {
+                background: #6bae9c;
                 font-weight: 600;
                 font-size: 20px;
                 padding: 20px;
                 color: #fff;
             }
     
-            .container-heading h2{
-                
+            .container-heading h2 {
+    
                 border-radius: 20px;
                 width: 30%;
                 margin: auto;
                 color: #6bae9c;
                 margin-top: 70px;
-               
+    
             }
-            
-            .main-container{
+    
+            .main-container {
                 background-color: #fff;
                 box-shadow: 0px 5px 20px 5px #cee4de80;
                 width: 70%;
                 margin: auto;
                 z-index: -1;
-                
+    
                 margin-bottom: 100px !important;
                 padding: 50px;
                 box-sizing: border-box;
-                
+    
             }
     
-            .main-container input, .main-container select{
+            .main-container input,
+            .main-container select {
                 width: 100%;
                 padding: 20px;
                 box-sizing: border-box;
@@ -70,20 +74,19 @@
                 margin-top: 5px;
             }
     
-            .main-container label{
+            .main-container label {
                 color: #6bae9c;
             }
     
-            .main-container button{
+            .main-container button {
                 background: linear-gradient(to bottom right, #14d8e8, #56f99f);
                 padding: 15px 50px;
                 border-radius: 5px;
                 color: #000;
                 border: none;
                 font-weight: bold;
-                
-            }
     
+            }
         </style>
 </head>
 
@@ -151,51 +154,74 @@
 
     </div>
 
-    <div class="container-heading">
-        <h2>Add Customer</h2>
-    </div>
 
-    <!-- Add Customer -->
+    <!-- Sales Report -->
     <div class="main-container">
-       
+        <div class="container-heading">Sales Report </div>
+        <hr>
         <div class="main-content">
-            <form action="/addCustomer" method="post">
+            <form action="">
 
-                <div class="form-col">
-                    <label for="customer_name">Customer Name :</label>
-                    <input type="text" name="customer_name" id="customer_name" placeholder="Name" required>
+                <label> Search :</label>
+                <div class="form-two-col" style="display: flex; gap: 10px;">
+                    <label> Start Date :</label>
+                    <input type="date" name="start_date" id="start_date">
+                    <label> End Date :</label>
+                    <input type="date" name="end_date" id="end_date">
+                    
                 </div>
+                <button>Refresh</button>
+                <hr>
 
-                <div class="form-col">
-                    <label for="contact_number">Contact Number :</label>
-                    <input type="text" name="contact_number" id="contact_number" placeholder="Contact Number" required>
-                </div>
+               <!-- ... existing code ... -->
 
-                <div class="form-col">
-                    <label for="address">Address :</label>
-                    <input type="text" name="address" id="address" placeholder="Address" required>
-                </div>
+<div class="table-container">
+    <table>
+        <tr>
+            <th>SL.</th>
+            <th>Sales Date</th>
+            
+            <th>Customer Name</th>
+            <th>Medicine Name</th>
+            <th>Total Amount</th>
+            <th>Action</th> <!-- Add Action column -->
+        </tr>
 
-                <div class="form-col">
-                    <label for="doct_name">Doctor's Name : </label>
-                    <input type="text" name="doct_name" id="doct_name" placeholder="Doctor's Name">
-                </div>
+        <% for (let i = 0; i < salesData.length; i++) { %>
+            <tr>
+                <td><%= i + 1 %></td>
+                <td><%= salesData[i].date.toLocaleDateString() %></td>
+            
+                <td><%= salesData[i].customerName %></td>
+                <td><%= salesData[i].medicineName %></td>
+                <td><%= salesData[i].netTotal %></td>
+                <td>
+                    <form action="/generateInvoice" method="post">
+                        <input type="hidden" name="invoiceId" value="<%= salesData[i]._id %>">
+                        <button type="submit">Generate Invoice</button>
+                    </form>
+                </td>
+            </tr>
+        <% } %>
 
-                <div class="form-col">
-                    <label for="doct_add">Doctor's Address : </label>
-                    <input type="text" name="doct_add" id="doct_add" placeholder="Doctor's Address">
-                </div>
+        <tr>
+            <td colspan="10"><span class="green">Total Sales = <span class="blue"><%= totalSales %> </span></td>
+            
+        </tr>
+    </table>
+</div>
 
-                <br>
-                
+<!-- ... existing code ... -->
+
+
 
                 <div class="btn-add">
-                    <button type="submit">Add</button>
+                    <button>Print</button>
                 </div>
+
             </form>
         </div>
     </div>
-
 
 </body>
 

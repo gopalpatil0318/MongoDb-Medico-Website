@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Management System</title>
+    <link rel="stylesheet" href="../../../style.css">
+    <link rel="stylesheet" href="../medicine/addMedicine.css">
+    <link rel="stylesheet" href="../medicine/manageMedicineStock.css">
+    <link rel="stylesheet" href="../report/salesReport.css">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;0,900;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Nav Bar -->
+    <div class="big-heading">Medical Management System</div>
+    <div class="navbar">
+        <a href="../../../index.html">Dashboard</a>
+        <div class="dropdown">
+            <button class="dropbtn">Invoice
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="../invoice/newInvoice.html">Add New Invoice</a>
+                <a href="../invoice/manageInvoice.html">Manage Invoice</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Customer
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="#">Add New Customer</a>
+                <a href="#">Manage Customer</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Medicine
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="../medicine/addMedicine.css">Add New Medicine</a>
+                <a href="../medicine/manageMedicine.html">Manage Medicine</a>
+                <a href="../medicine/manageMedicineStock.html">Manage Medicine Stock</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Supplier
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="../supplier/addSupplier.html">Add New Supplier</a>
+                <a href="../supplier/manageSupplier.html">Manage Supplier</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Purchase
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="../purchase/addPurchase.html">Add New Purchase</a>
+                <a href="../purchase/managePurchase.html">Manage Purchase</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Report
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="../report/purchaseReport.html">Purchase Report</a>
+                <a href="../report/salesReport.html">Sales Report</a>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Sales Report -->
+    <div class="main-container">
+        <div class="container-heading">Purchase Report </div>
+        <hr>
+        <div class="main-content">
+            <form action="">
+
+                <div class="form-two-col">
+                    <label> Start Date :</label>
+                    <input type="date" name="start_date" id="start_date">
+                    <label> End Date :</label>
+                    <input type="date" name="end_date" id="end_date">
+                    <button>Refresh</button>
+                </div>
+
+                <hr>
+
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>SL.</th>
+                            <th>Purchase Date</th>
+                            <th>Voucher Number</th>
+                            <th>Invoice No</th>
+                            <th>Supplier Name</th>
+                            <th>Total Amount</th>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="5"><span class="green">Total Sales = </span></td>
+                            <td ><span class="blue">78900</span></td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="btn-add">
+                    <button>Print</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,6 +1,8 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const methodOverride = require('method-override');
+const pdfGenerator = require('./pdfGenerator'); 
+
 const mongoose = require("mongoose");
 require("dotenv").config();
 
@@ -106,6 +108,11 @@ const invoiceSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    medicineName: {
+        type: String,
+        required: true,
+
+    }
 });
 
 const Invoice = mongoose.model('Invoice', invoiceSchema);
@@ -621,13 +628,17 @@ app.post('/newInvoice', async (req, res) => {
             medicineId,
         } = req.body;
 
+        const medicineInfoArray = await MedicineStock.find({ _id: medicineId });
+        const medicineInfo = medicineInfoArray[0];
+        const medicineName = medicineInfo.medicineName;
+
         const newInvoice = new Invoice({
             customerName: customer_name,
             date: new Date(date),
             totalAmount: total_amount,
             totalDiscount: total_discount,
             netTotal: net_total,
-           
+            medicineName: medicineName,
         });
 
        
@@ -656,7 +667,7 @@ app.post('/newInvoice', async (req, res) => {
        
 
         console.log('Invoice added successfully');
-        res.redirect('/');
+        res.redirect('/manageInvoice');
     } catch (error) {
         console.error('Error adding invoice:', error);
         res.status(500).send('Internal Server Error');
@@ -702,6 +713,60 @@ app.post("/deleteInvoice", async (req, res) => {
     }
 });
 
+
+
+// ... existing code ...
+
+app.get('/salesReport', async (req, res) => {
+    try {
+        // Fetch sales data from your database
+        const salesData = await Invoice.find()
+           
+
+        // Calculate total sales
+        const totalSales = salesData.reduce((total, sale) => total + sale.netTotal, 0);
+
+        res.render('salesReport', { salesData, totalSales });
+    } catch (error) {
+        console.error('Error fetching sales data:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// ... existing code ...
+
+
+
+
+app.post('/generateInvoice', async (req, res) => {
+    const invoiceId = req.body.invoiceId;
+  
+    try {
+      const invoiceData = await Invoice.findById(invoiceId);
+  
+      if (!invoiceData) {
+        return res.status(404).send('Invoice not found');
+      }
+  
+      // Generate PDF using the data
+      const pdfBuffer = await pdfGenerator.generateInvoicePDF({
+       
+        customerName: invoiceData.customerName,
+        medicineName: invoiceData.medicineName, // Ensure you include the medicineName property
+        date: invoiceData.date,
+        netTotal: invoiceData.netTotal,
+      });
+  
+      // Set headers for PDF download
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'attachment; filename=invoice.pdf');
+      res.send(pdfBuffer);
+    } catch (error) {
+      console.error('Error generating invoice:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+  
 
 const PORT = process.env.PORT;
 app.listen(3000 || PORT, () => {
